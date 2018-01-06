@@ -42,4 +42,4 @@ testem.log
 Thumbs.db
 
 # Config File
-/src/app/Service/yahoo-shopping-api/config/secret-config.ts
+/src/lib/Service/yahoo-shopping-api/config/secret-config.ts

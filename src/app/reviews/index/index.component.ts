@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { YahooShoppingApiService } from './../../Service/yahoo-shopping-api/yahoo-shopping-api.service';
+import { YahooShoppingApiService } from './../../../lib/service/yahoo-shopping-api/yahoo-shopping-api.service';
 import { Observable } from 'rxjs/Rx';
 
 class Reviews {
