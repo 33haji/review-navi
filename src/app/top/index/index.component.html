@@ -1,55 +1,64 @@
-<form
-  [formGroup]="shoppingSearchForm"
-  (ngSubmit)="onSubmit(shoppingSearchForm.value)"
->
-  <!-- 商品名入力フォーム -->
-  <div
-    [class.error]="!shoppingSearchForm.controls['keyword'].valid && shoppingSearchForm.controls['keyword'].touched"
+<div class="ui raised very padded text container segment">
+  <form
+    class="ui form"
+    [class.error]="!shoppingSearchForm.valid"
+    [formGroup]="shoppingSearchForm"
+    (ngSubmit)="onSubmit(shoppingSearchForm.value)"
   >
-    <label for="keyword">商品名</label>
-    <input
-      type="text"
-      id="keyword"
-      placeholder="iPhone X"
-      [formControl]="shoppingSearchForm.controls['keyword']"
+    <!-- 商品名入力フォーム -->
+    <div
+      class="field"
+      [class.error]="!shoppingSearchForm.controls['keyword'].valid && shoppingSearchForm.controls['keyword'].touched"
     >
+      <label for="keyword">商品名</label>
+      <input
+        type="text"
+        id="keyword"
+        placeholder="iPhone X"
+        [formControl]="shoppingSearchForm.controls['keyword']"
+      >
+    </div>
     <div
       *ngIf="shoppingSearchForm.controls['keyword'].hasError('required') && shoppingSearchForm.controls['keyword'].touched"
       class="ui error message"
     >必須項目です</div>
-  </div>
-  <!-- /商品名入力フォーム -->
+    <!-- /商品名入力フォーム -->
 
-  <!-- 価格範囲入力フォーム -->
-  <div
-    [class.error]="!shoppingSearchForm.controls['priceFrom'].valid && shoppingSearchForm.controls['priceFrom'].touched"
-  >
-    <label for="priceFrom">最低価格</label>
-    <input
-      type="text"
-      id="priceFrom"
-      [formControl]="shoppingSearchForm.controls['priceFrom']"
-    >
+    <!-- 価格範囲入力フォーム -->
     <div
-      *ngIf="shoppingSearchForm.controls['priceFrom'].hasError('number') && shoppingSearchForm.controls['priceFrom'].touched"
-      class="ui error message"
-    >数値を入力してください</div>
-  </div>
-  <div
-    [class.error]="!shoppingSearchForm.controls['priceTo'].valid && shoppingSearchForm.controls['priceTo'].touched"
-  >
-    <label for="priceTo">最高価格</label>
-    <input
-      type="text"
-      id="priceTo"
-      [formControl]="shoppingSearchForm.controls['priceTo']"
+      class="field"
+      [class.error]="!shoppingSearchForm.controls['priceFrom'].valid && shoppingSearchForm.controls['priceFrom'].touched"
     >
+      <label for="priceFrom">最低価格</label>
+      <input
+        type="text"
+        id="priceFrom"
+        placeholder="0"
+        [formControl]="shoppingSearchForm.controls['priceFrom']"
+      >
+      <div
+        *ngIf="shoppingSearchForm.controls['priceFrom'].hasError('number') && shoppingSearchForm.controls['priceFrom'].touched"
+        class="ui error message"
+      >数値を入力してください</div>
+    </div>
     <div
-      *ngIf="shoppingSearchForm.controls['priceTo'].hasError('number') && shoppingSearchForm.controls['priceTo'].touched"
-      class="ui error message"
-    >数値を入力してください</div>
-  </div>
-  <!-- /価格範囲入力フォーム -->
+      class="field"
+      [class.error]="!shoppingSearchForm.controls['priceTo'].valid && shoppingSearchForm.controls['priceTo'].touched"
+    >
+      <label for="priceTo">最高価格</label>
+      <input
+        type="text"
+        id="priceTo"
+        placeholder="100000"
+        [formControl]="shoppingSearchForm.controls['priceTo']"
+      >
+      <div
+        *ngIf="shoppingSearchForm.controls['priceTo'].hasError('number') && shoppingSearchForm.controls['priceTo'].touched"
+        class="ui error message"
+      >数値を入力してください</div>
+    </div>
+    <!-- /価格範囲入力フォーム -->
 
-  <button type="submit" [disabled]="!shoppingSearchForm.valid">検索</button>
-</form>
+    <button class="ui button" type="submit" [disabled]="!shoppingSearchForm.valid">レビュー表示</button>
+  </form>
+</div>

@@ -17,14 +17,14 @@ export class IndexComponent {
       // 商品名
       'keyword': ['', Validators.required],
       // 最低価格
-      'priceFrom': [0, CustomValidators.numberValidator],
+      'priceFrom': [null, CustomValidators.numberValidator],
       // 最高価格
       'priceTo': [null, CustomValidators.numberValidator]
       // TODO 商品カテゴリーで絞りこめるようにする
     });
   }
 
-  // "検索"ボタンを押した時の処理
+  // "レビュー表示"ボタンを押した時の処理
   onSubmit(value: string): void {
     console.log('送信された値：', value);
   }
