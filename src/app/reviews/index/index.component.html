@@ -1,10 +1,7 @@
-<h1>検索結果数</h1>
-<p>{{ reviews.total }}</p>
-
-<h1>最初のデータの位置</h1>
-<p>{{ reviews.start }}</p>
+<h1>レビュー平均</h1>
+<div>{{ reviewAvg }}</div>
 
 <h1>レビュー</h1>
-<div *ngFor="let item of reviews.result">
-  <p>{{ item.ReviewTitle }}</p>
+<div *ngFor="let item of reviews">
+  <div>{{ item.ReviewTitle }}</div>
 </div>
