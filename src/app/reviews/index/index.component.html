@@ -1,7 +1,52 @@
-<h1>レビュー平均</h1>
-<div>{{ reviewAvg }}</div>
+<div class="reviews-page">
+  <div class="ui center aligned text container">
+    <div class="ui raised segment">
+      <h2 class="ui header">
+        <div>レビュー平均点</div>
+        <div class="star rating-average">
+          <div class="star-rating-front" [style.width.%]="reviewAvg / 5 * 100">★★★★★</div>
+          <div class="star-rating-back">★★★★★</div>
+        </div>
+        <div class="sub header">{{ reviewAvg }}</div>
+      </h2>
+    </div>
+  </div>
 
-<h1>レビュー</h1>
-<div *ngFor="let item of reviews">
-  <div>{{ item.ReviewTitle }}</div>
+  <ng-container *ngIf="reviews.length > 0; else elseBlock">
+    <div class="review-items">
+      <div class="ui container">
+        <div class="ui divided items">
+          <ng-container *ngFor="let item of reviews">
+            <ng-container *ngIf="item.Description">
+              <div class="item">
+                <div class="image">
+                  <img [attr.src]="item.Target.Image.Medium.Url">
+                </div>
+                <div class="content">
+                  <a class="header" [attr.href]="item.Url">{{ item.ReviewTitle }}</a>
+                  <div class="meta">
+                    <div class="star rating-item">
+                      <div class="star-rating-front" [style.width.%]="item.Ratings.Rate / 5 * 100">★★★★★</div>
+                      <div class="star-rating-back">★★★★★</div>
+                    </div>
+                  </div>
+                  <div class="description">
+                    <p>{{ item.Description }}</p>
+                  </div>
+                  <div class="extra">
+                    {{ item.Target.Name }}
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #elseBlock>
+    <div class="ui loading segment">
+      <div class="full-screen"></div>
+    </div>
+  </ng-template>
 </div>

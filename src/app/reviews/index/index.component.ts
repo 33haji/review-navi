@@ -11,13 +11,13 @@ import { Observable } from 'rxjs/Rx';
 export class IndexComponent implements OnInit {
 
   // レビューの情報
-  reviews: object[];
+  reviews: object[] = [];
   // レビューの平均点
   reviewAvg: number;
 
   constructor(
     private _yahooShoppingApiService: YahooShoppingApiService
-  ) { }
+  ) {}
 
   async ngOnInit() {
     // Yahoo商品検索APIの結果を取り出す
@@ -41,11 +41,11 @@ export class IndexComponent implements OnInit {
       }
     }
     // レビューの平均値を算出
-    this.reviewAvg = reviewSum / count;
+    this.reviewAvg = Math.round(reviewSum / count * 10) / 10;
 
     // Yahoo商品レビューAPIからレビュー情報を取得する
     this.reviews = await this._yahooShoppingApiService.reviewSearch(janCodes);
-    console.dir(this.reviews);
+    console.dir(this.reviews)
   }
 
 }

@@ -34,11 +34,12 @@ export class IndexComponent {
   // "レビュー表示"ボタンを押した時の処理
   onSubmit(value: any): void {
     // 商品検索APIを使って、商品を検索する
+    let itemList: object[] = []
     this._yahooShoppingApiService
       .itemSearch(value.keyword, value.priceFrom, value.priceTo, 50)
       .subscribe(data => {
-        const itemList: object[] = data.ResultSet[0].Result;
-
+        itemList = data.ResultSet[0].Result;
+      }, null, () => {
         // localStrageに検索結果を保存
         localStorage.setItem('yahooItemSearchResults', JSON.stringify(itemList));
 

@@ -28,17 +28,19 @@ export class YahooShoppingApiService {
       searchParams.set('callback', 'JSONP_CALLBACK');
 
       // APIをたたく
-      let results: object[] = []
-      this._jsonp
-        .get('https://shopping.yahooapis.jp/ShoppingWebService/V1/json/reviewSearch', { search: searchParams })
-        .map(res => res.json())
-        .subscribe(data => {
-          results = data.ResultSet.Result;
-          reviews = reviews.concat(results);
-        });
+      // TODO 全てのレビューが取れていないかも？
+      const itemReviews = await new Promise(resolve => {
+        let results: object[] = []
+        this._jsonp
+          .get('https://shopping.yahooapis.jp/ShoppingWebService/V1/json/reviewSearch', { search: searchParams })
+          .map(res => res.json())
+          .subscribe(data => {
+            results = results.concat(data.ResultSet.Result);
+          }, null, () => resolve(results));
+      });
+      reviews = reviews.concat(itemReviews);
     }
-    // 上記の処理が終わるまで1秒スリープする
-    await new Promise(resolve => setTimeout(resolve, 1000));
+
     return reviews;
   }
 
