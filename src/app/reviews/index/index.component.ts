@@ -45,7 +45,6 @@ export class IndexComponent implements OnInit {
 
     // Yahoo商品レビューAPIからレビュー情報を取得する
     this.reviews = await this._yahooShoppingApiService.reviewSearch(janCodes);
-    console.dir(this.reviews)
   }
 
 }
