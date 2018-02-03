@@ -5,7 +5,7 @@
 import { Injectable } from '@angular/core';
 import { RequestOptions, Jsonp, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { appid } from './config/secret-config'
+import { appid } from './config/secret-config'  // ← ここに自分のappidを記載する
 import 'rxjs/add/operator/map';
 
 @Injectable()

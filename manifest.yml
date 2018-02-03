@@ -1,0 +1,7 @@
+applications:
+- name: review-collection
+  host: review-collection_0828
+  command: npm start
+  domain: mybluemix.net
+  instances: 1
+  memory: 192M

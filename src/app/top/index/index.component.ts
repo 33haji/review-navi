@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import CustomValidators = require('./../../../lib/util/customValidators');
+import * as CustomValidators from './../../../lib/util/customValidators';
 import { YahooShoppingApiService } from './../../../lib/service/yahoo-shopping-api/yahoo-shopping-api.service';
 
 @Component({
