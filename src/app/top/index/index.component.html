@@ -1,25 +1,25 @@
 <div class="ui raised very padded text container segment">
   <form
     class="ui form"
-    [class.error]="!shoppingSearchForm.valid"
-    [formGroup]="shoppingSearchForm"
-    (ngSubmit)="onSubmit(shoppingSearchForm.value)"
+    [class.error]="!searchForm.valid"
+    [formGroup]="searchForm"
+    (ngSubmit)="onSubmit(searchForm.value)"
   >
     <!-- 商品名入力フォーム -->
     <div
       class="field"
-      [class.error]="!shoppingSearchForm.controls['keyword'].valid && shoppingSearchForm.controls['keyword'].touched"
+      [class.error]="!searchForm.controls['keyword'].valid && searchForm.controls['keyword'].touched"
     >
       <label for="keyword">商品名</label>
       <input
         type="text"
         id="keyword"
-        placeholder="iPhone X"
-        [formControl]="shoppingSearchForm.controls['keyword']"
+        placeholder="Google Home"
+        [formControl]="searchForm.controls['keyword']"
       >
     </div>
     <div
-      *ngIf="shoppingSearchForm.controls['keyword'].hasError('required') && shoppingSearchForm.controls['keyword'].touched"
+      *ngIf="searchForm.controls['keyword'].hasError('required') && searchForm.controls['keyword'].touched"
       class="ui error message"
     >必須項目です</div>
     <!-- /商品名入力フォーム -->
@@ -27,38 +27,67 @@
     <!-- 価格範囲入力フォーム -->
     <div
       class="field"
-      [class.error]="!shoppingSearchForm.controls['priceFrom'].valid && shoppingSearchForm.controls['priceFrom'].touched"
+      [class.error]="!searchForm.controls['priceFrom'].valid && searchForm.controls['priceFrom'].touched"
     >
       <label for="priceFrom">最低価格</label>
       <input
         type="text"
         id="priceFrom"
         placeholder="0"
-        [formControl]="shoppingSearchForm.controls['priceFrom']"
+        [formControl]="searchForm.controls['priceFrom']"
       >
       <div
-        *ngIf="shoppingSearchForm.controls['priceFrom'].hasError('number') && shoppingSearchForm.controls['priceFrom'].touched"
+        *ngIf="searchForm.controls['priceFrom'].hasError('number') && searchForm.controls['priceFrom'].touched"
         class="ui error message"
       >数値を入力してください</div>
     </div>
     <div
       class="field"
-      [class.error]="!shoppingSearchForm.controls['priceTo'].valid && shoppingSearchForm.controls['priceTo'].touched"
+      [class.error]="!searchForm.controls['priceTo'].valid && searchForm.controls['priceTo'].touched"
     >
       <label for="priceTo">最高価格</label>
       <input
         type="text"
         id="priceTo"
         placeholder="100000"
-        [formControl]="shoppingSearchForm.controls['priceTo']"
+        [formControl]="searchForm.controls['priceTo']"
       >
       <div
-        *ngIf="shoppingSearchForm.controls['priceTo'].hasError('number') && shoppingSearchForm.controls['priceTo'].touched"
+        *ngIf="searchForm.controls['priceTo'].hasError('number') && searchForm.controls['priceTo'].touched"
         class="ui error message"
       >数値を入力してください</div>
     </div>
     <!-- /価格範囲入力フォーム -->
 
-    <button class="ui button" type="submit" [disabled]="!shoppingSearchForm.valid">レビュー表示</button>
+    <button class="ui button" type="submit" [disabled]="!searchForm.valid">レビュー表示</button>
   </form>
 </div>
+
+<!-- 商品検索結果 -->
+<ng-container *ngIf="searchProducts.length > 0">
+  <div class="search-products">
+    <div class="ui container">
+      <div class="ui divided items">
+        <ng-container *ngFor="let item of searchProducts; index as i">
+          <ng-container *ngIf="item.Product.productName">
+            <a class="item" href="/reviews" (click)="onClickProduct($event, i)">
+              <div class="image">
+                <img [attr.src]="item.Product.mediumImageUrl">
+              </div>
+              <div class="middle aligned content">
+                <div class="header">{{ item.Product.productName }}</div>
+                <div class="extra" *ngIf="item.Product.makerName">{{ item.Product.makerName }}</div>
+                <div class="star rating-item">
+                  <div class="star-rating-front" [style.width.%]="item.Product.reviewAverage / 5 * 100">★★★★★</div>
+                  <div class="star-rating-back">★★★★★</div>
+                </div>
+                <div class="meta">レビュー数：{{ item.Product.reviewCount }}</div>
+              </div>
+            </a>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<!-- /商品検索結果 -->

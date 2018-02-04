@@ -20,31 +20,32 @@ export class IndexComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    // Yahoo商品検索APIの結果を取り出す
-    const yahooItemSearchResult: object[] = JSON.parse(localStorage.getItem('yahooItemSearchResults')) || [];
+    // 対象の商品情報を取りだす
+    const productInfo: object[] = JSON.parse(localStorage.getItem('productInfo')) || [];
+    console.dir(productInfo);
 
-    // 検索結果の商品のレビュー平均値と先頭10商品のJANコードを取得
-    let reviewSum = 0;
-    let janCodes: number[] = []
-    let count = 0
-    for (let i in yahooItemSearchResult) {
-      if (yahooItemSearchResult[i]['Review']) {
-        // レビューの計算
-        if (+yahooItemSearchResult[i]['Review'].Rate > 0) {
-          reviewSum += +yahooItemSearchResult[i]['Review'].Rate;
-          count++;
-        }
-        // JANコードを格納
-        if (yahooItemSearchResult[i]['JanCode'] && janCodes.length < 10) {
-          janCodes.push(yahooItemSearchResult[i]['JanCode']);
-        }
-      }
-    }
-    // レビューの平均値を算出
-    this.reviewAvg = Math.round(reviewSum / count * 10) / 10;
-
-    // Yahoo商品レビューAPIからレビュー情報を取得する
-    this.reviews = await this._yahooShoppingApiService.reviewSearch(janCodes);
+    // // 検索結果の商品のレビュー平均値と先頭10商品のJANコードを取得
+    // let reviewSum = 0;
+    // let janCodes: number[] = []
+    // let count = 0
+    // for (let i in yahooItemSearchResult) {
+    //   if (yahooItemSearchResult[i]['Review']) {
+    //     // レビューの計算
+    //     if (+yahooItemSearchResult[i]['Review'].Rate > 0) {
+    //       reviewSum += +yahooItemSearchResult[i]['Review'].Rate;
+    //       count++;
+    //     }
+    //     // JANコードを格納
+    //     if (yahooItemSearchResult[i]['JanCode'] && janCodes.length < 10) {
+    //       janCodes.push(yahooItemSearchResult[i]['JanCode']);
+    //     }
+    //   }
+    // }
+    // // レビューの平均値を算出
+    // this.reviewAvg = Math.round(reviewSum / count * 10) / 10;
+    //
+    // // Yahoo商品レビューAPIからレビュー情報を取得する
+    // this.reviews = await this._yahooShoppingApiService.reviewSearch(janCodes);
   }
 
 }

@@ -43,3 +43,4 @@ Thumbs.db
 
 # Config File
 /src/lib/Service/yahoo-shopping-api/config/secret-config.ts
+/src/lib/Service/rakuten-api/config/secret-config.ts
