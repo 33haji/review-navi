@@ -1,14 +1,23 @@
 <div class="reviews-page">
   <div class="ui center aligned text container">
-    <div class="ui raised segment">
-      <h2 class="ui header">
-        <div>レビュー平均点</div>
-        <div class="star rating-average">
-          <div class="star-rating-front" [style.width.%]="reviewAvg / 5 * 100">★★★★★</div>
-          <div class="star-rating-back">★★★★★</div>
+    <div class="ui items raised segment">
+      <div class="item">
+        <div class="image">
+          <img [attr.src]="productInfo.image">
         </div>
-        <div class="sub header">{{ reviewAvg }}</div>
-      </h2>
+        <div class="middle aligned content">
+          <div class="header">{{ productInfo.name }}</div>
+          <div class="extra" *ngIf="productInfo.maker">{{ productInfo.maker }}</div>
+          <div class="rating-average">
+            <div>レビュー平均点</div>
+            <div class="star">
+              <div class="star-rating-front" [style.width.%]="reviewAvg / 5 * 100">★★★★★</div>
+              <div class="star-rating-back">★★★★★</div>
+            </div>
+            <div class="sub header">{{ reviewAvg }}</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

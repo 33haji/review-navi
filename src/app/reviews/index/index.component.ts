@@ -1,51 +1,46 @@
 import { Component, OnInit } from '@angular/core';
-import { YahooShoppingApiService } from './../../../lib/service/yahoo-shopping-api/yahoo-shopping-api.service';
 import { Observable } from 'rxjs/Rx';
+import { WebScrapingService } from './../../../lib/service/web-scraping/web-scraping.service';
 
 @Component({
   selector: 'reviews-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.css'],
-  providers: [YahooShoppingApiService]
+  providers: [WebScrapingService]
 })
 export class IndexComponent implements OnInit {
 
+  // 対象商品の情報
+  productInfo: {
+    image: string,
+    name: string,
+    maker: string
+  };
   // レビューの情報
   reviews: object[] = [];
   // レビューの平均点
   reviewAvg: number;
 
   constructor(
-    private _yahooShoppingApiService: YahooShoppingApiService
+    private _webScrapingService: WebScrapingService
   ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     // 対象の商品情報を取りだす
-    const productInfo: object[] = JSON.parse(localStorage.getItem('productInfo')) || [];
-    console.dir(productInfo);
+    const productInfoFull: object[] = JSON.parse(localStorage.getItem('productInfo')) || [];
 
-    // // 検索結果の商品のレビュー平均値と先頭10商品のJANコードを取得
-    // let reviewSum = 0;
-    // let janCodes: number[] = []
-    // let count = 0
-    // for (let i in yahooItemSearchResult) {
-    //   if (yahooItemSearchResult[i]['Review']) {
-    //     // レビューの計算
-    //     if (+yahooItemSearchResult[i]['Review'].Rate > 0) {
-    //       reviewSum += +yahooItemSearchResult[i]['Review'].Rate;
-    //       count++;
-    //     }
-    //     // JANコードを格納
-    //     if (yahooItemSearchResult[i]['JanCode'] && janCodes.length < 10) {
-    //       janCodes.push(yahooItemSearchResult[i]['JanCode']);
-    //     }
-    //   }
-    // }
-    // // レビューの平均値を算出
-    // this.reviewAvg = Math.round(reviewSum / count * 10) / 10;
-    //
-    // // Yahoo商品レビューAPIからレビュー情報を取得する
-    // this.reviews = await this._yahooShoppingApiService.reviewSearch(janCodes);
+    // 表示する商品情報を格納
+    this.productInfo = {
+      image: productInfoFull['mediumImageUrl'],
+      name: productInfoFull['productName'],
+      maker: productInfoFull['makerName']
+    };
+
+    // レビューの平均値を算出
+    this.reviewAvg = productInfoFull['reviewAverage'];
+
+    // レビュー情報を取得(WEBスクレイピング)
+    this._webScrapingService.scrapingReviewsInfo(productInfoFull['reviewUrlPC'])
   }
 
 }

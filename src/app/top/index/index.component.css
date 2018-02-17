@@ -1,3 +1,11 @@
+/* ページレイアウト */
+.top-page {
+  padding-top: 50px;
+}
+.search-products {
+  margin-top: 30px;
+}
+
 /* 評価用の星 */
 .star {
   position: relative;
