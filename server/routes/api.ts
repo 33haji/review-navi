@@ -18,15 +18,17 @@ apiRouter.get("/scraping", async (request: Request, response: Response) => {
       return Array.from(reviewNodeList, data => {
         return {
           title: data.querySelector('.revTitle') ? data.querySelector('.revTitle').textContent : '',
-          review: data.querySelector('.revTxt') ? data.querySelector('.revTxt').textContent : ''
+          review: data.querySelector('.revTxt') ? data.querySelector('.revTxt').textContent : '',
+          point: data.querySelector('.txtPoint') ? data.querySelector('.txtPoint').textContent : 0,
+          date: data.querySelector('.revDays') ? data.querySelector('.revDays').textContent : 0
         }
       })
     });
-    console.dir(reviews);
-
     browser.close()
+
+    response.json(reviews)
   } catch(e) {
-    console.error(e)
+    response.status(500).send({ error: '/api/scraping failed!' });
   }
 });
 

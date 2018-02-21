@@ -1,4 +1,5 @@
 <div class="reviews-page">
+  <!-- 商品概要 -->
   <div class="ui center aligned text container">
     <div class="ui items raised segment">
       <div class="item">
@@ -20,30 +21,29 @@
       </div>
     </div>
   </div>
+  <!-- /商品概要 -->
 
+  <!-- レビュー一覧 -->
   <ng-container *ngIf="reviews.length > 0; else elseBlock">
     <div class="review-items">
       <div class="ui container">
         <div class="ui divided items">
           <ng-container *ngFor="let item of reviews">
-            <ng-container *ngIf="item.Description">
+            <ng-container *ngIf="item.review">
               <div class="item">
-                <div class="image">
-                  <img [attr.src]="item.Target.Image.Medium.Url">
-                </div>
                 <div class="content">
-                  <a class="header" [attr.href]="item.Url">{{ item.ReviewTitle }}</a>
+                  <p class="header">{{ item.title || 'No Title' }}</p>
                   <div class="meta">
                     <div class="star rating-item">
-                      <div class="star-rating-front" [style.width.%]="item.Ratings.Rate / 5 * 100">★★★★★</div>
+                      <div class="star-rating-front" [style.width.%]="item.point / 5 * 100">★★★★★</div>
                       <div class="star-rating-back">★★★★★</div>
                     </div>
                   </div>
                   <div class="description">
-                    <p>{{ item.Description }}</p>
+                    <p>{{ item.review }}</p>
                   </div>
                   <div class="extra">
-                    {{ item.Target.Name }}
+                    {{ item.date }}
                   </div>
                 </div>
               </div>
@@ -53,9 +53,13 @@
       </div>
     </div>
   </ng-container>
+  <!-- /レビュー一覧 -->
+
+  <!-- ローディング -->
   <ng-template #elseBlock>
     <div class="ui loading segment">
       <div class="full-screen"></div>
     </div>
   </ng-template>
+  <!-- /ローディング -->
 </div>

@@ -41,6 +41,9 @@ export class IndexComponent implements OnInit {
 
     // レビュー情報を取得(WEBスクレイピング)
     this._webScrapingService.scrapingReviewsInfo(productInfoFull['reviewUrlPC'])
+    .subscribe(data => {
+      this.reviews = data
+    }, null, null);
   }
 
 }
