@@ -15,6 +15,13 @@
   height: auto;
   min-height: 100vh;
 }
+.product-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  -webkit- transform: translateY(-50%) translateX(-50%);
+}
 
 /* 評価用の星 */
 .star {
@@ -24,6 +31,7 @@
 }
 .rating-average {
   margin-top: 20px;
+  margin-bottom: 10px;
 }
 .rating-average .star {
   font-size: 30px;

@@ -4,7 +4,7 @@
 
 import { Injectable } from '@angular/core';
 import { RequestOptions, Jsonp, URLSearchParams } from '@angular/http';
-import { appid } from './config/secret-config'  // ← ここに自分のappidを記載する
+import { appid, affiliateId } from './config/secret-config'  // ← ここに自分のappidを記載する
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -23,6 +23,7 @@ export class RakutenApiService {
     // パラメータを設定
     const searchParams = new URLSearchParams();
     searchParams.set('applicationId', appid);
+    searchParams.set('affiliateId', affiliateId);
     searchParams.set('keyword', keyword || '');
     if (minPrice) {
       searchParams.set('minPrice', minPrice.toString());

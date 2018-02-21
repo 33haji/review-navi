@@ -4,7 +4,7 @@
     <div class="ui items raised segment">
       <div class="item">
         <div class="image">
-          <img [attr.src]="productInfo.image">
+          <img [attr.src]="productInfo.image" class="product-image">
         </div>
         <div class="middle aligned content">
           <div class="header">{{ productInfo.name }}</div>
@@ -16,6 +16,11 @@
               <div class="star-rating-back">★★★★★</div>
             </div>
             <div class="sub header">{{ reviewAvg }}</div>
+          </div>
+          <div class="ui labeled button">
+            <a class="ui orange button" [attr.href]="productInfo.url">
+              <i class="shopping basket icon"></i> 商品画面へ
+            </a>
           </div>
         </div>
       </div>

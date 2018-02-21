@@ -14,7 +14,8 @@ export class IndexComponent implements OnInit {
   productInfo: {
     image: string,
     name: string,
-    maker: string
+    maker: string,
+    url: string
   };
   // レビューの情報
   reviews: object[] = [];
@@ -33,7 +34,8 @@ export class IndexComponent implements OnInit {
     this.productInfo = {
       image: productInfoFull['mediumImageUrl'],
       name: productInfoFull['productName'],
-      maker: productInfoFull['makerName']
+      maker: productInfoFull['makerName'],
+      url: productInfoFull['affiliateUrl']
     };
 
     // レビューの平均値を算出
