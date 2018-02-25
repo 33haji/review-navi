@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as CustomValidators from './../../../lib/util/customValidators';
@@ -11,10 +11,18 @@ import { RakutenApiService } from './../../../lib/service/rakuten-api/rakuten-ap
   providers: [RakutenApiService]
 })
 export class IndexComponent {
-
-  // 商品情報入力フォーム
+  // カテゴリー(楽天ジャンル)
+  categories: object[] = [
+    { label: 'ファッション', value: ['551177', '100371', '558885', '216131', '216129', '558929', '100433', '100533'] },
+    { label: 'エンタメ・デジタル家電', value: ['10026', '211742', '564500', '566382', '101240', '562637', '101164'] },
+    { label: 'グルメ', value: ['100227', '100316', '510915', '551167', '100317', '510901'] },
+    { label: '住まい・暮らし', value: ['100804', '215783', '100005', '101213', '558944'] },
+    { label: '美容・健康', value: ['100938', '100939', '551169'] },
+    { label: '車・スポーツ', value: ['101070', '101114', '101077', '503190'] }
+  ]
+  // アイテム情報入力フォーム
   searchForm: FormGroup;
-  // 商品検索結果
+  // アイテム検索結果
   searchProducts: object[] = [];
 
   constructor(
@@ -23,31 +31,27 @@ export class IndexComponent {
     private router: Router
   ) {
     this.searchForm = fb.group({
-      // 商品名
+      // アイテム名
       'keyword': ['', Validators.required],
-      // 最低価格
-      'priceFrom': [null, CustomValidators.numberValidator],
-      // 最高価格
-      'priceTo': [null, CustomValidators.numberValidator]
-      // TODO 商品カテゴリーで絞りこめるようにする
+      // カテゴリー
+      'category': [null, null]
     });
   }
 
-  // "レビュー表示"ボタンを押した時の処理
-  onSubmit(value: any): void {
+  // "アイテム検索"ボタンを押した時の処理
+  async onSubmit(value: any) {
+    // 選択したカテゴリーに含まれるジャンルIDを取得
+    const targetCategory = this.categories.find(category => category['label'] === value.category);
+    const genreIds = targetCategory ? targetCategory['value'] : ['']
     // 楽天の商品価格ナビ製品検索APIを使って、商品を検索する
     let itemList: object[] = []
-    this._rakutenApiService
-      .productSearch(value.keyword, value.priceFrom, value.priceTo)
-      .subscribe(data => {
-        // 検索結果を配列に格納することで画面に出力
-        this.searchProducts = data.Products;
-      }, null, null);
+    this.searchProducts = await this._rakutenApiService
+      .productSearch(value.keyword, genreIds);
   }
 
-  // 商品をクリックした時の処理
+  // アイテムをクリックした時の処理
   onClickProduct(event: any, index: number) {
-    // localStrageに対象の商品情報を保管
+    // localStrageに対象のアイテム情報を保管
     localStorage.setItem('productInfo', JSON.stringify(this.searchProducts[index]['Product']));
   }
 

@@ -9,6 +9,7 @@
         <div class="middle aligned content">
           <div class="header">{{ productInfo.name }}</div>
           <div class="extra" *ngIf="productInfo.maker">{{ productInfo.maker }}</div>
+          <div class="extra">¥{{ productInfo.minPrice }} 〜 ¥{{ productInfo.maxPrice }}</div>
           <div class="rating-average">
             <div>レビュー平均点</div>
             <div class="star">

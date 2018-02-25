@@ -6,12 +6,12 @@
       [formGroup]="searchForm"
       (ngSubmit)="onSubmit(searchForm.value)"
     >
-      <!-- 商品名入力フォーム -->
+      <!-- アイテム名入力フォーム -->
       <div
         class="field"
         [class.error]="!searchForm.controls['keyword'].valid && searchForm.controls['keyword'].touched"
       >
-        <label for="keyword">商品名</label>
+        <label for="keyword">アイテム名</label>
         <input
           type="text"
           id="keyword"
@@ -23,54 +23,39 @@
         *ngIf="searchForm.controls['keyword'].hasError('required') && searchForm.controls['keyword'].touched"
         class="ui error message"
       >必須項目です</div>
-      <!-- /商品名入力フォーム -->
+      <!-- /アイテム名入力フォーム -->
 
-      <!-- 価格範囲入力フォーム -->
+      <!-- カテゴリー選択フォーム -->
       <div
         class="field"
-        [class.error]="!searchForm.controls['priceFrom'].valid && searchForm.controls['priceFrom'].touched"
+        [class.error]="!searchForm.controls['category'].valid && searchForm.controls['category'].touched"
       >
-        <label for="priceFrom">最低価格</label>
-        <input
-          type="text"
-          id="priceFrom"
-          placeholder="0"
-          [formControl]="searchForm.controls['priceFrom']"
+        <label for="category">カテゴリー</label>
+        <select
+          id="category"
+          class="ui simple dropdown item"
+          [formControl]="searchForm.controls['category']"
         >
-        <div
-          *ngIf="searchForm.controls['priceFrom'].hasError('number') && searchForm.controls['priceFrom'].touched"
-          class="ui error message"
-        >数値を入力してください</div>
+          <option value="">全てのカテゴリー</option>
+          <option *ngFor="let item of categories" [value]="item.label">{{ item.label }}</option>
+        </select>
       </div>
-      <div
-        class="field"
-        [class.error]="!searchForm.controls['priceTo'].valid && searchForm.controls['priceTo'].touched"
-      >
-        <label for="priceTo">最高価格</label>
-        <input
-          type="text"
-          id="priceTo"
-          placeholder="100000"
-          [formControl]="searchForm.controls['priceTo']"
-        >
-        <div
-          *ngIf="searchForm.controls['priceTo'].hasError('number') && searchForm.controls['priceTo'].touched"
-          class="ui error message"
-        >数値を入力してください</div>
-      </div>
-      <!-- /価格範囲入力フォーム -->
+      <!-- /カテゴリー選択フォーム -->
 
-      <button class="ui button" type="submit" [disabled]="!searchForm.valid">レビュー表示</button>
+      <button class="ui button" type="submit" [disabled]="!searchForm.valid">
+        <i class="search icon"></i>
+        アイテム検索
+      </button>
     </form>
   </div>
 
-  <!-- 商品検索結果 -->
+  <!-- アイテム検索結果 -->
   <ng-container *ngIf="searchProducts.length > 0">
     <div class="search-products">
       <div class="ui container">
         <div class="ui divided items">
           <ng-container *ngFor="let item of searchProducts; index as i">
-            <ng-container *ngIf="item.Product.productName">
+            <ng-container *ngIf="item && item.Product.productName">
               <a class="item" href="/reviews" (click)="onClickProduct($event, i)">
                 <div class="image">
                   <img [attr.src]="item.Product.mediumImageUrl">
@@ -91,5 +76,5 @@
       </div>
     </div>
   </ng-container>
-  <!-- /商品検索結果 -->
+  <!-- /アイテム検索結果 -->
 </div>
