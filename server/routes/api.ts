@@ -12,9 +12,11 @@ apiRouter.get("/scraping", async (request: Request, response: Response) => {
     const browser = await puppeteer.launch()
     const page = await browser.newPage()
     await page.goto(url);
-    // レビュー情報を取得する
+    // ページから情報を取得
     const reviews = await page.evaluate(() => {
       const reviewNodeList = document.querySelectorAll('.rpsRevListLeft');
+      // let results: { reviews: object[], pageInfo: object };
+      // レビュー情報
       return Array.from(reviewNodeList, data => {
         return {
           title: data.querySelector('.revTitle') ? data.querySelector('.revTitle').textContent : '',
@@ -23,6 +25,14 @@ apiRouter.get("/scraping", async (request: Request, response: Response) => {
           date: data.querySelector('.revDays') ? data.querySelector('.revDays').textContent : 0
         }
       })
+
+      // ページ情報
+      // console.dir(document.querySelectorAll('.dui-pagination'));
+      // results.pageInfo = {
+      //   totalPage:
+      // }
+
+      // return results;
     });
     browser.close()
 

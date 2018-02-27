@@ -56,6 +56,19 @@
             </ng-container>
           </ng-container>
         </div>
+        <div class="ui center aligned grid">
+          <div class="ui pagination menu">
+            <a *ngIf="page > 1" class="icon item" href="/reviews?{{ page - 1 }}">
+              <i class="left chevron icon"></i>
+            </a>
+            <ng-container *ngFor="let tmp of pageTotalArr">
+              <a class="item" href="/reviews?{{ index + 1 }}">{{ index + 1 }}</a>
+            </ng-container>
+            <a *ngIf="page < pageTotal" class="icon item" href="/reviews?{{ page + 1 }}">
+              <i class="right chevron icon"></i>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </ng-container>

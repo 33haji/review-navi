@@ -23,7 +23,7 @@ export class WebScrapingService {
     // パラメータをセット
     const params = new URLSearchParams();
     params.set("url", url);
-
+    
     // スクレイピングを行い、レビュー情報を返す
     try {
       return this.http.get("api/scraping", { params })

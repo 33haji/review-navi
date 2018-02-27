@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { WebScrapingService } from './../../../lib/service/web-scraping/web-scraping.service';
 
@@ -23,9 +24,16 @@ export class IndexComponent implements OnInit {
   reviews: object[] = [];
   // レビューの平均点
   reviewAvg: number;
+  // 総ページ数
+  pageTotal: number;
+  // 現在のページ数
+  page: number;
+  // 連番表示用の配列
+  pageTotalArr: number[];
 
   constructor(
-    private _webScrapingService: WebScrapingService
+    private _webScrapingService: WebScrapingService,
+    private _activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -45,11 +53,20 @@ export class IndexComponent implements OnInit {
     // レビューの平均値を算出
     this.reviewAvg = productInfoFull['reviewAverage'];
 
+    // パラメータを取得
+    const params = this._activatedRoute.snapshot.queryParams;
+    this.page = params.page ? parseInt(params.page) : 1;
+
     // レビュー情報を取得(WEBスクレイピング)
-    this._webScrapingService.scrapingReviewsInfo(productInfoFull['reviewUrlPC'])
+    const url = `${productInfoFull['reviewUrlPC']}${this.page}`
+    this._webScrapingService.scrapingReviewsInfo(url)
     .subscribe(data => {
       this.reviews = data
     }, null, null);
+
+    // ページ情報を取得
+    // this.pageTotal = productInfoFull['pageCount'];
+    // this.pageTotalArr = new Array(this.pageTotal);
   }
 
 }
