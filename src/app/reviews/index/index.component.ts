@@ -61,12 +61,10 @@ export class IndexComponent implements OnInit {
     const url = `${productInfoFull['reviewUrlPC']}${this.page}`
     this._webScrapingService.scrapingReviewsInfo(url)
     .subscribe(data => {
-      this.reviews = data
+      this.reviews = data.reviews;
+      this.pageTotal = Number(data.pageInfo.totalPage);
+      this.pageTotalArr = new Array(this.pageTotal);
     }, null, null);
-
-    // ページ情報を取得
-    // this.pageTotal = productInfoFull['pageCount'];
-    // this.pageTotalArr = new Array(this.pageTotal);
   }
 
 }

@@ -56,15 +56,19 @@
             </ng-container>
           </ng-container>
         </div>
-        <div class="ui center aligned grid">
+        <div class="ui center aligned grid" *ngIf="pageTotal > 0">
           <div class="ui pagination menu">
-            <a *ngIf="page > 1" class="icon item" href="/reviews?{{ page - 1 }}">
+            <a *ngIf="page > 1" class="icon item" href="/reviews?page={{ page - 1 }}">
               <i class="left chevron icon"></i>
             </a>
-            <ng-container *ngFor="let tmp of pageTotalArr">
-              <a class="item" href="/reviews?{{ index + 1 }}">{{ index + 1 }}</a>
+            <ng-container *ngFor="let tmp of pageTotalArr; index as i">
+              <a
+                class="item"
+                [ngClass]="{'active': i + 1 == page }"
+                href="/reviews?page={{ i + 1 }}"
+              >{{ i + 1 }}</a>
             </ng-container>
-            <a *ngIf="page < pageTotal" class="icon item" href="/reviews?{{ page + 1 }}">
+            <a *ngIf="page < pageTotal" class="icon item" href="/reviews?page={{ page + 1 }}">
               <i class="right chevron icon"></i>
             </a>
           </div>
@@ -76,8 +80,10 @@
 
   <!-- ローディング -->
   <ng-template #elseBlock>
-    <div class="ui loading segment">
-      <div class="full-screen"></div>
+    <div class="ui segment">
+      <div class="full-screen ui active inverted dimmer">
+        <div class="ui text loader">※ 5 ~ 10秒ほどお時間がかかります</div>
+      </div>
     </div>
   </ng-template>
   <!-- /ローディング -->

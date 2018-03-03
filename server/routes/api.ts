@@ -15,9 +15,12 @@ apiRouter.get("/scraping", async (request: Request, response: Response) => {
     // ページから情報を取得
     const reviews = await page.evaluate(() => {
       const reviewNodeList = document.querySelectorAll('.rpsRevListLeft');
-      // let results: { reviews: object[], pageInfo: object };
+      let results: { reviews: object[], pageInfo: object } = {
+        reviews: [],
+        pageInfo: {}
+      };
       // レビュー情報
-      return Array.from(reviewNodeList, data => {
+      results.reviews = Array.from(reviewNodeList, data => {
         return {
           title: data.querySelector('.revTitle') ? data.querySelector('.revTitle').textContent : '',
           review: data.querySelector('.revTxt') ? data.querySelector('.revTxt').textContent : '',
@@ -27,12 +30,11 @@ apiRouter.get("/scraping", async (request: Request, response: Response) => {
       })
 
       // ページ情報
-      // console.dir(document.querySelectorAll('.dui-pagination'));
-      // results.pageInfo = {
-      //   totalPage:
-      // }
+      results.pageInfo = {
+        totalPage: document.querySelectorAll('.dui-pagination a.item:not(.-previous):not(.-next):not(.-first)').length
+      }
 
-      // return results;
+      return results;
     });
     browser.close()
 
