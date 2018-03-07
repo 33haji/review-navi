@@ -12,12 +12,12 @@ app.use(json());
 app.use(compression());
 app.use(urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, "/dist/client")));
+app.use(express.static(path.join("dist/client")));
 
 app.use("/api", apiRouter);
 
-// app.get("/", (req, res) => {
-//   res.sendFile(path.join(__dirname, '../client/index.html'));
-// });
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/index.html'));
+});
 
 export { app };
