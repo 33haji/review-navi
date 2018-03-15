@@ -5,7 +5,8 @@
 import { Injectable } from '@angular/core';
 import { RequestOptions, Jsonp, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { appid } from './config/secret-config'  // ← ここに自分のappidを記載する
+// ここに自分のappidを記載する(現在はこのAPIを使っていないのでコードもコメントアウト中)
+// import { appid } from './config/secret-config';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -23,7 +24,7 @@ export class YahooShoppingApiService {
     for (let jan of janCodes) {
       // パラメータを設定
       const searchParams = new URLSearchParams();
-      searchParams.set('appid', appid);
+      // searchParams.set('appid', appid);
       searchParams.set('jan', jan.toString());
       searchParams.set('callback', 'JSONP_CALLBACK');
 
@@ -55,7 +56,7 @@ export class YahooShoppingApiService {
   itemSearch (query: string, priceFrom: number, priceTo: number, results: number) {
     // パラメータを設定
     const searchParams = new URLSearchParams();
-    searchParams.set('appid', appid);
+    // searchParams.set('appid', appid);
     searchParams.set('query', query || '');
     if (priceFrom) {
       searchParams.set('price_from', priceFrom.toString());
