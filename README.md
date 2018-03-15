@@ -1,15 +1,9 @@
 # ReviewNavi
 
-Yahoo!ShoppingのAPIを利用して、検索条件に一致するレビュー一覧を表示する
+楽天のAPIを利用して、検索条件に一致する商品のレビュー一覧を表示する
 
 ## Feature
-* 店舗関係なく、レビューの一覧と星の平均値を見ることができる
-
-## Usage
-
-```
-$ npm start
-```
+* 商品に対するレビューのみを表示(不要な付加情報なし)
 
 ## Install
 
@@ -17,9 +11,18 @@ $ npm start
 $ npm install
 ```
 
-## TODO
-- [ ] ヘッダーメニューを作成する
-  - レビュコレ ReviewCollection
-- [ ] アフェリエイトを連携する
-  - Yahoo!ShoppingのAPIは商用的利用は禁止なのでその対策を考える
-- [ ] 商品カテゴリーを使って絞り込む
+## Usage
+1. installする
+2. 以下の情報を持った`lib/service/rakuten-api/config/secret-config.ts`を作成
+
+  ```
+  // 自分のappIDとaffiliateID
+  export const appid: string = '01234567890123456789';
+  export const affiliateId: string = '12345678.abcdefgh.12345678.abcdefgh'
+  ```
+
+3. 起動
+
+  ```
+  $ npm start
+  ```
