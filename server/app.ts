@@ -14,9 +14,11 @@ app.use(urlencoded({ extended: true }));
 
 app.use(express.static(path.join("dist/client")));
 
+// expressのルーティング
 app.use("/api", apiRouter);
 
-app.get("/", (req, res) => {
+// Angularのルーティング
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 

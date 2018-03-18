@@ -40,7 +40,8 @@ apiRouter.get("/scraping", async (request: Request, response: Response) => {
 
     response.json(reviews)
   } catch(e) {
-    response.status(500).send({ error: '/api/scraping failed!' });
+    // response.status(500).send({ error: '/api/scraping failed!' });
+    response.status(500).send({ error: e.message });
   }
 });
 
