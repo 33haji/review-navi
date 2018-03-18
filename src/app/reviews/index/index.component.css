@@ -13,7 +13,7 @@
 .full-screen {
   width: 100vw;
   height: auto;
-  min-height: 100vh;
+  min-height: 50vh;
 }
 .product-image {
   position: absolute;

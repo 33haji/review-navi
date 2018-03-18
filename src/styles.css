@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+#contents {
+  /* footerを画面下部に固定するための処理 */
+  min-height: calc(100vh - 70px);
+}
+footer {
+  border-top: 1px solid rgba(34,36,38,.15);
+  margin-top: 50px;
+  padding-top: 10px;
+  height: 50px;
+}
