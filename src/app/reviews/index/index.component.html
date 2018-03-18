@@ -39,7 +39,11 @@
             <ng-container *ngIf="item.review">
               <div class="item">
                 <div class="content">
-                  <p class="header">{{ item.title || 'No Title' }}</p>
+                  <!-- タイトルがない場合はNo Titleを表示(色はグレー) -->
+                  <p
+                    class="header"
+                    [ngStyle]="!item.title && { 'color': 'rgba(0,0,0,.2)' }"
+                  >{{ item.title || 'No Title' }}</p>
                   <div class="meta">
                     <div class="star rating-item">
                       <div class="star-rating-front" [style.width.%]="item.point / 5 * 100">★★★★★</div>
