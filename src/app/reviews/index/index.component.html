@@ -30,66 +30,91 @@
   </div>
   <!-- /商品概要 -->
 
-  <!-- レビュー一覧 -->
-  <ng-container *ngIf="reviews.length > 0; else elseBlock">
-    <div class="review-items">
-      <div class="ui container">
-        <div class="ui divided items">
-          <ng-container *ngFor="let item of reviews">
-            <ng-container *ngIf="item.review">
-              <div class="item">
-                <div class="content">
-                  <!-- タイトルがない場合はNo Titleを表示(色はグレー) -->
-                  <p
-                    class="header"
-                    [ngStyle]="!item.title && { 'color': 'rgba(0,0,0,.2)' }"
-                  >{{ item.title || 'No Title' }}</p>
-                  <div class="meta">
-                    <div class="star rating-item">
-                      <div class="star-rating-front" [style.width.%]="item.point / 5 * 100">★★★★★</div>
-                      <div class="star-rating-back">★★★★★</div>
+  <div class="ui top attached tabular menu">
+    <a class="item" [class.active]="tab === 'review'" (click)="tab = 'review'">
+      レビュー<img src="assets\img\rakuten.png" class="tab-icon" />
+    </a>
+    <a class="item" [class.active]="tab === 'tweet'" (click)="tab = 'tweet'">
+      関連ツイート<img src="assets\img\twitter.png" class="tab-icon" />
+    </a>
+  </div>
+  <div
+    class="ui bottom attached tab segment"
+    [class.active]="tab === 'review'"
+    [class.loading]="tab === 'review' && reviews.length <= 0"
+  >
+    <!-- レビュー一覧 -->
+    <ng-container>
+      <div class="tab-items">
+        <div class="ui container">
+          <div class="ui divided items">
+            <ng-container *ngFor="let item of reviews">
+              <ng-container *ngIf="item.review">
+                <div class="item">
+                  <div class="content">
+                    <!-- タイトルがない場合はNo Titleを表示(色はグレー) -->
+                    <p
+                      class="header"
+                      [ngStyle]="!item.title && { 'color': 'rgba(0,0,0,.2)' }"
+                    >{{ item.title || 'No Title' }}</p>
+                    <div class="meta">
+                      <div class="star rating-item">
+                        <div class="star-rating-front" [style.width.%]="item.point / 5 * 100">★★★★★</div>
+                        <div class="star-rating-back">★★★★★</div>
+                      </div>
+                    </div>
+                    <div class="description">
+                      <p>{{ item.review }}</p>
+                    </div>
+                    <div class="extra">
+                      {{ item.date }}
                     </div>
                   </div>
-                  <div class="description">
-                    <p>{{ item.review }}</p>
-                  </div>
-                  <div class="extra">
-                    {{ item.date }}
-                  </div>
                 </div>
-              </div>
+              </ng-container>
             </ng-container>
-          </ng-container>
+          </div>
+          <div class="ui center aligned grid" *ngIf="pageTotal > 0">
+            <div class="ui pagination menu">
+              <a *ngIf="page > 1" class="icon item" href="/reviews?page={{ page - 1 }}">
+                <i class="left chevron icon"></i>
+              </a>
+              <ng-container *ngFor="let tmp of pageTotalArr; index as i">
+                <a
+                  class="item"
+                  [ngClass]="{'active': i + 1 == page }"
+                  href="/reviews?page={{ i + 1 }}"
+                >{{ i + 1 }}</a>
+              </ng-container>
+              <a *ngIf="page < pageTotal" class="icon item" href="/reviews?page={{ page + 1 }}">
+                <i class="right chevron icon"></i>
+              </a>
+            </div>
+          </div>
         </div>
-        <div class="ui center aligned grid" *ngIf="pageTotal > 0">
-          <div class="ui pagination menu">
-            <a *ngIf="page > 1" class="icon item" href="/reviews?page={{ page - 1 }}">
-              <i class="left chevron icon"></i>
-            </a>
-            <ng-container *ngFor="let tmp of pageTotalArr; index as i">
-              <a
-                class="item"
-                [ngClass]="{'active': i + 1 == page }"
-                href="/reviews?page={{ i + 1 }}"
-              >{{ i + 1 }}</a>
-            </ng-container>
-            <a *ngIf="page < pageTotal" class="icon item" href="/reviews?page={{ page + 1 }}">
-              <i class="right chevron icon"></i>
-            </a>
+      </div>
+    </ng-container>
+    <!-- /レビュー一覧 -->
+  </div>
+
+  <div class="ui bottom attached tab segment" [class.active]="tab === 'tweet'">
+    <div class="tab-items">
+      <div class="ui container">
+        <div class="ui divided items">
+          <div class="item" *ngFor="let tweet of tweets">
+            <div class="content">
+              <div class="tweet-img-div">
+                <a class="header" *ngFor="let media of tweet.media">
+                  <img *ngIf="media.type === 'photo'" [attr.src]="media.dataUrl" class="tweet-img">
+                </a>
+              </div>
+              <div class="description">
+                <p [innerHTML]="tweet.text"></p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </ng-container>
-  <!-- /レビュー一覧 -->
-
-  <!-- ローディング -->
-  <ng-template #elseBlock>
-    <div class="ui segment">
-      <div class="full-screen ui active inverted dimmer">
-        <div class="ui text loader">※ 5 ~ 10秒ほどお待ちください</div>
-      </div>
-    </div>
-  </ng-template>
-  <!-- /ローディング -->
+  </div>
 </div>

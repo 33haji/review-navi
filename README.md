@@ -1,9 +1,11 @@
 # ReviewNavi
 
-楽天のAPIを利用して、検索条件に一致する商品のレビュー一覧を表示する
+ある商品に関する評価や情報をまとめたサイト
 
 ## Feature
-* 商品に対するレビューのみを表示(不要な付加情報なし)
+* 見ることのできる評価や情報は以下
+  - 楽天のレビュー
+  - Twitterの関連ツイート
 
 ## Install
 
@@ -13,12 +15,20 @@ $ npm install
 
 ## Usage
 1. Nodeのパッケージをinstall
-2. 以下の情報を持った`lib/service/rakuten-api/config/secret-config.ts`を作成
+2. 秘密鍵などの情報を持ったファイルを作成
 
   ```
+  # /src/lib/service/rakuten-api/config/secret-config.ts
   // 楽天のappIDとaffiliateID(以下の値はサンプル)
-  export const appid: string = '01234567890123456789';
-  export const affiliateId: string = '12345678.abcdefgh.12345678.abcdefgh'
+  export const appid: string = [個人のappid];
+  export const affiliateId: string = [個人のaffiliateId];
+
+  # /server/config/twitter-client.ts
+  // Twitterのクライアント情報
+  export const consumerKey: string = [個人のconsumerKey];
+  export const consumerSecret: string = [個人のconsumerSecret];
+  export const accessToken: string = [個人のaccessToken];
+  export const accessTokenSecret: string = [個人のaccessTokenSecret];
   ```
 
 3. 起動

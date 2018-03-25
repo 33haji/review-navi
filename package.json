@@ -36,6 +36,7 @@
     "puppeteer": "^1.0.0",
     "request": "^2.85.0",
     "rxjs": "^5.5.2",
+    "twit": "^2.2.9",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

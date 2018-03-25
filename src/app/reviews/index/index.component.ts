@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { WebScrapingService } from './../../../lib/service/web-scraping/web-scraping.service';
+import { TwitterApiService } from './../../../lib/service/twitter-api/twitter-api.service';
 
 @Component({
   selector: 'reviews-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.css'],
-  providers: [WebScrapingService]
+  providers: [WebScrapingService, TwitterApiService]
 })
 export class IndexComponent implements OnInit {
 
@@ -30,9 +31,14 @@ export class IndexComponent implements OnInit {
   page: number;
   // 連番表示用の配列
   pageTotalArr: number[];
+  // 関連ツイート
+  tweets: object[] = [];
+  // 現在のtab
+  tab: string = 'review';
 
   constructor(
     private _webScrapingService: WebScrapingService,
+    private _twitterApiService: TwitterApiService,
     private _activatedRoute: ActivatedRoute
   ) {}
 
@@ -57,13 +63,30 @@ export class IndexComponent implements OnInit {
     const params = this._activatedRoute.snapshot.queryParams;
     this.page = params.page ? parseInt(params.page) : 1;
 
-    // レビュー情報を取得(WEBスクレイピング)
+    // 楽天でレビュー情報を取得(WEBスクレイピング)
     const url = `${productInfoFull['reviewUrlPC']}${this.page}`
-    this._webScrapingService.scrapingReviewsInfo(url)
+    this._webScrapingService.scrapingReviewsFromRakuten(url)
     .subscribe(data => {
       this.reviews = data.reviews;
       this.pageTotal = Number(data.pageInfo.totalPage);
       this.pageTotalArr = new Array(this.pageTotal);
+    }, null, null);
+
+    // Twitterで関連ツイートを取得
+    const name = productInfoFull['productNo'] || this.productInfo.name
+    this._twitterApiService.getHashtagTweet(name)
+    .subscribe(data => {
+      // textに含まれるURLをaタグに変換
+      const regexpUrl = /((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g;
+      const regexpmMakeLink = function(all, url, h, href) {
+          return '<a href="h' + href + '">' + url + '</a>';
+      }
+      const formattedData = data.map(d => {
+        d.text = d.text.replace(regexpUrl, regexpmMakeLink)
+        return d
+      });
+      // 表示用の配列に代入
+      this.tweets = formattedData;
     }, null, null);
   }
 

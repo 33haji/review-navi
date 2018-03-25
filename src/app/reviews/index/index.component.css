@@ -5,15 +5,12 @@
 }
 .reviews-page {
   margin-top: 40px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
-.review-items {
+.tab-items {
   margin-top: 40px;
   margin-bottom: 40px;
-}
-.full-screen {
-  width: 100vw;
-  height: auto;
-  min-height: 50vh;
 }
 .product-image {
   position: absolute;
@@ -21,6 +18,10 @@
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
   -webkit- transform: translateY(-50%) translateX(-50%);
+}
+.tab-icon {
+  max-width: 20px;
+  height: 20px;
 }
 
 /* 評価用の星 */
@@ -52,4 +53,14 @@
 }
 .star-rating-back {
   color: #ccc;
+}
+
+/* ツイート */
+.tweet-img {
+  height: 150px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.tweet-img-div {
+  text-align: center;
 }
