@@ -33,3 +33,36 @@
 .star-rating-back {
   color: #ccc;
 }
+
+/* aboutモジュール */
+.about-module, .about-module-sp {
+  text-align: center;
+  margin-top: 100px;
+}
+.about-module i {
+  font-size: 5em;
+}
+.about-module-sp i {
+  font-size: 10vw;
+}
+.about-module .text, .about-module-sp .text {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.about-module .text {
+  font-size: 2em;
+}
+.about-module-sp .text {
+  font-size: 6vw;
+}
+.about-module-sp h2 {
+  font-size: 4vw;
+}
+.about-module .context {
+  font-size: 1.4em;
+  line-height: 1.4285em;
+}
+.about-module-sp .context {
+  font-size: 2.5vw;
+  line-height: 4vw;
+}

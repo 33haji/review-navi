@@ -50,7 +50,7 @@
   </div>
 
   <!-- アイテム検索結果 -->
-  <ng-container *ngIf="searchProducts.length > 0">
+  <ng-container *ngIf="searchProducts.length > 0; else about">
     <div class="search-products">
       <div class="ui container">
         <div class="ui divided items">
@@ -77,4 +77,26 @@
     </div>
   </ng-container>
   <!-- /アイテム検索結果 -->
+  <ng-template #about>
+    <!-- about -->
+    <div [class]="isSp ? 'about-module-sp' : 'about-module'">
+      <div class="ui container">
+        <i class="circular thumbs up outline icon"></i>
+        <span class="text">OR</span>
+        <i class="circular thumbs down icon"></i>
+        <h2>"このアイテムの評判ってどうなんだろう…？"</h2>
+        <div class="context">
+          欲しいものや気になるものがある時、この疑問が頭に浮かびます。<br/>
+          せっかく買うなら失敗も後悔もしたくない。<br/>
+          そんな時、あなたはどうやってそのアイテムの評判を調べますか？<br/>
+          検索エンジンでヒットしたサイトを読み漁る？ショッピングサイトやSNSで検索？<br/>
+          でも、いろんなサイトを行き来するのはめんどくさい!!ですよね。<br/>
+          このサイトでは、あなたが気になっているものの名前を入力するだけで、<br/>
+          レビューや関連ツイートなどそのアイテムの<strong>"評判"</strong>を知ることができます。<br/>
+          さぁ、上の検索欄にアイテム名を入力してみよう!!
+        </div>
+      </div>
+    </div>
+    <!-- /about -->
+  </ng-template>
 </div>
