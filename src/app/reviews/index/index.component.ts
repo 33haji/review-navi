@@ -3,12 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { WebScrapingService } from './../../../lib/service/web-scraping/web-scraping.service';
 import { TwitterApiService } from './../../../lib/service/twitter-api/twitter-api.service';
+import { YoutubeApiService } from './../../../lib/service/youtube-api/youtube-api.service';
 
 @Component({
   selector: 'reviews-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.css'],
-  providers: [WebScrapingService, TwitterApiService]
+  providers: [WebScrapingService, TwitterApiService, YoutubeApiService]
 })
 export class IndexComponent implements OnInit {
 
@@ -27,18 +28,21 @@ export class IndexComponent implements OnInit {
   reviewAvg: number;
   // 総ページ数
   pageTotal: number;
-  // 現在のページ数
+  // 現在のページ
   page: number;
   // 連番表示用の配列
   pageTotalArr: number[];
   // 関連ツイート
   tweets: object[] = [];
+  // 関連動画
+  videos: object[] = [];
   // 現在のtab
   tab: string = 'review';
 
   constructor(
     private _webScrapingService: WebScrapingService,
     private _twitterApiService: TwitterApiService,
+    private _youtubeApiService: YoutubeApiService,
     private _activatedRoute: ActivatedRoute
   ) {}
 
@@ -88,6 +92,12 @@ export class IndexComponent implements OnInit {
       // 表示用の配列に代入
       this.tweets = formattedData;
     }, null, null);
-  }
 
+    // Youtubeで関連動画を取得
+    this._youtubeApiService.getRelatedVideos(name)
+    .subscribe(data => {
+      // 表示用の配列に代入
+      this.videos = data
+    }, null, null);
+  }
 }

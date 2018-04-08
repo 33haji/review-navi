@@ -32,10 +32,13 @@
 
   <div class="ui top attached tabular menu">
     <a class="item" [class.active]="tab === 'review'" (click)="tab = 'review'">
-      レビュー<img src="assets\img\rakuten.png" class="tab-icon" />
+      <i class="thumbs up outline icon"></i>レビュー
     </a>
     <a class="item" [class.active]="tab === 'tweet'" (click)="tab = 'tweet'">
-      関連ツイート<img src="assets\img\twi.png" class="tab-icon" />
+      <i class="comment outline icon"></i>関連ツイート
+    </a>
+    <a class="item" [class.active]="tab === 'video'" (click)="tab = 'video'">
+      <i class="film icon"></i>関連動画
     </a>
   </div>
   <div
@@ -118,5 +121,35 @@
       </div>
     </div>
     <!-- /関連ツイート一覧 -->
+  </div>
+
+  <div class="ui bottom attached tab segment" [class.active]="tab === 'video'">
+    <!-- 関連動画一覧 -->
+    <div class="tab-items">
+      <div class="ui container">
+        <div class="ui divided items">
+          <div class="item" *ngFor="let video of videos">
+            <a class="ui small image" [attr.href]="'https://www.youtube.com/watch?v=' + video.videoId">
+              <img [attr.src]="video.thumbnail">
+            </a>
+            <div class="content">
+              <a class="header" [attr.href]="'https://www.youtube.com/watch?v=' + video.videoId">
+                {{ video.title }}
+              </a>
+              <div class="extra">
+                <span>視聴回数 {{ video.viewCount }}回</span>
+                <span><i class="user icon"></i> {{ video.channelTitle }}</span>
+                <span><i class="thumbs up icon"></i> {{ video.likeCount ? video.likeCount : 0 }}</span>
+                <span><i class="thumbs down icon"></i> {{ video.dislikeCount ? video.dislikeCount : 0 }}</span>
+              </div>
+              <div class="description">
+                <p>{{ video.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /関連動画一覧 -->
   </div>
 </div>
