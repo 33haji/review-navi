@@ -46,14 +46,17 @@ export class IndexComponent {
   }
 
   // "アイテム検索"ボタンを押した時の処理
-  async onSubmit(value: any) {
+  onSubmit(value: any) {
     // 選択したカテゴリーに含まれるジャンルIDを取得
     const targetCategory = this.categories.find(category => category['label'] === value.category);
     const genreIds = targetCategory ? targetCategory['value'] : ['']
     // 楽天の商品価格ナビ製品検索APIを使って、商品を検索する
     let itemList: object[] = []
-    this.searchProducts = await this._rakutenApiService
-      .productSearch(value.keyword, genreIds);
+    this._rakutenApiService.productSearch(value.keyword, genreIds)
+    .subscribe(data => {
+      // 表示用の配列に代入
+      this.searchProducts = data
+    }, null, null);
   }
 
   // アイテムをクリックした時の処理

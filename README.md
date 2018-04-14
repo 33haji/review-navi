@@ -1,11 +1,12 @@
 # ReviewNavi
 
-ある商品に関する評価や情報をまとめたサイト
+自分が関心のあるアイテムに関する評価や情報をまとめたサイト
 
 ## Feature
 * 見ることのできる評価や情報は以下
   - 楽天のレビュー
   - Twitterの関連ツイート
+  - YouTubeの関連動画
 
 ## Install
 
@@ -18,17 +19,21 @@ $ npm install
 2. 秘密鍵などの情報を持ったファイルを作成
 
   ```
-  # /src/lib/service/rakuten-api/config/secret-config.ts
-  // 楽天のappIDとaffiliateID(以下の値はサンプル)
+  # /server/routes/api/config/rakuten-client.ts
+  // 楽天のappIDとaffiliateID
   export const appid: string = [個人のappid];
   export const affiliateId: string = [個人のaffiliateId];
 
-  # /server/config/twitter-client.ts
+  # /server/routes/api/config/twitter-client.ts
   // Twitterのクライアント情報
   export const consumerKey: string = [個人のconsumerKey];
   export const consumerSecret: string = [個人のconsumerSecret];
   export const accessToken: string = [個人のaccessToken];
   export const accessTokenSecret: string = [個人のaccessTokenSecret];
+
+  # /server/routes/api/config/youtube-client.ts
+  // YouTubeのクライアント情報
+  export const apiKey: string = [個人のapiキー];
   ```
 
 3. 起動
