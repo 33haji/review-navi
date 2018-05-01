@@ -34,4 +34,23 @@ export class RakutenApiService {
       console.log(e.massage)
     }
   }
+
+  /**
+   * "productId"でアイテムを検索する
+   * @param  {string} productId
+   * @return {Observable<Response>}
+   */
+  findByProductId (productId: string) {
+    // パラメータを設定
+    const params = new URLSearchParams();
+    params.set('productId', productId);
+
+    // サーバーサイドでAPIをたたき、アイテム情報を取得
+    try {
+      return this.http.get("api/rakuten/productId", { params })
+      .map(res => res.json());
+    } catch (e) {
+      console.log(e.massage)
+    }
+  }
 }

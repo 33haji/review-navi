@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
+import { RakutenApiService } from './../../../lib/service/rakuten-api/rakuten-api.service';
 import { WebScrapingService } from './../../../lib/service/web-scraping/web-scraping.service';
 import { TwitterApiService } from './../../../lib/service/twitter-api/twitter-api.service';
 import { YoutubeApiService } from './../../../lib/service/youtube-api/youtube-api.service';
@@ -9,7 +10,7 @@ import { YoutubeApiService } from './../../../lib/service/youtube-api/youtube-ap
   selector: 'reviews-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.css'],
-  providers: [WebScrapingService, TwitterApiService, YoutubeApiService]
+  providers: [RakutenApiService, WebScrapingService, TwitterApiService, YoutubeApiService]
 })
 export class IndexComponent implements OnInit {
 
@@ -38,17 +39,33 @@ export class IndexComponent implements OnInit {
   videos: object[] = [];
   // 現在のtab
   tab: string = 'review';
+  // path
+  path: string = '';
+  // URLパラメータ
+  params: any;
 
   constructor(
+    private _rakutenApiService: RakutenApiService,
     private _webScrapingService: WebScrapingService,
     private _twitterApiService: TwitterApiService,
     private _youtubeApiService: YoutubeApiService,
     private _activatedRoute: ActivatedRoute
-  ) {}
+  ) {
+    this.params = this._activatedRoute.snapshot.queryParams;
+    this.path = `${location.pathname}?productId=${this.params.productId}`;
+    this.tab = this.params.tab || 'review';
+  }
 
-  ngOnInit() {
-    // 対象の商品情報を取りだす
-    const productInfoFull: object[] = JSON.parse(localStorage.getItem('productInfo')) || [];
+  async ngOnInit() {
+    // 対象の商品情報を楽天APIを使って取得する
+    const productId: string = this.params.productId;
+    let productInfoFull: object[] = [];
+    await new Promise(resolve => {
+      this._rakutenApiService.findByProductId(productId)
+      .subscribe(data => {
+        productInfoFull = data[0]['Product'];
+      }, null, () => resolve());
+    })
 
     // 表示する商品情報を格納
     this.productInfo = {
@@ -64,8 +81,7 @@ export class IndexComponent implements OnInit {
     this.reviewAvg = productInfoFull['reviewAverage'];
 
     // パラメータを取得
-    const params = this._activatedRoute.snapshot.queryParams;
-    this.page = params.page ? parseInt(params.page) : 1;
+    this.page = this.params.page ? parseInt(this.params.page) : 1;
 
     // 楽天でレビュー情報を取得(WEBスクレイピング)
     const url = `${productInfoFull['reviewUrlPC']}${this.page}`
@@ -99,5 +115,11 @@ export class IndexComponent implements OnInit {
       // 表示用の配列に代入
       this.videos = data
     }, null, null);
+  }
+
+  // 項目タブが押された時の処理
+  onClickTab (name: string) {
+    this.tab = name;
+    history.pushState(null, null, `${this.path}&tab=${name}`);
   }
 }

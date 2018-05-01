@@ -2,7 +2,7 @@
   <!-- 商品概要 -->
   <div class="ui center aligned text container">
     <div class="ui items raised segment">
-      <div class="item">
+      <div class="item" *ngIf="productInfo">
         <div class="image">
           <img [attr.src]="productInfo.image" class="product-image">
         </div>
@@ -31,13 +31,13 @@
   <!-- /商品概要 -->
 
   <div class="ui top attached tabular menu">
-    <a class="item" [class.active]="tab === 'review'" (click)="tab = 'review'">
+    <a class="item" [class.active]="tab === 'review'" (click)="onClickTab('review')">
       <i class="thumbs up outline icon"></i>レビュー
     </a>
-    <a class="item" [class.active]="tab === 'tweet'" (click)="tab = 'tweet'">
+    <a class="item" [class.active]="tab === 'tweet'" (click)="onClickTab('tweet')">
       <i class="comment outline icon"></i>関連ツイート
     </a>
-    <a class="item" [class.active]="tab === 'video'" (click)="tab = 'video'">
+    <a class="item" [class.active]="tab === 'video'" (click)="onClickTab('video')">
       <i class="film icon"></i>関連動画
     </a>
   </div>
@@ -79,17 +79,17 @@
           </div>
           <div class="ui center aligned grid" *ngIf="pageTotal > 0">
             <div class="ui pagination menu">
-              <a *ngIf="page > 1" class="icon item" href="/reviews?page={{ page - 1 }}">
+              <a *ngIf="page > 1" class="icon item" href="{{ path }}&page={{ page - 1 }}">
                 <i class="left chevron icon"></i>
               </a>
               <ng-container *ngFor="let tmp of pageTotalArr; index as i">
                 <a
                   class="item"
                   [ngClass]="{'active': i + 1 == page }"
-                  href="/reviews?page={{ i + 1 }}"
+                  href="{{ path }}&page={{ i + 1 }}"
                 >{{ i + 1 }}</a>
               </ng-container>
-              <a *ngIf="page < pageTotal" class="icon item" href="/reviews?page={{ page + 1 }}">
+              <a *ngIf="page < pageTotal" class="icon item" href="{{ path }}&page={{ page + 1 }}">
                 <i class="right chevron icon"></i>
               </a>
             </div>

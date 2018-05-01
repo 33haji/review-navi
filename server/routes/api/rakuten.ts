@@ -43,4 +43,32 @@ router.get("/", async (req: Request, res: Response) => {
   res.json(prouducts);
 });
 
+// "productId"でアイテム情報を検索するAPI
+router.get("/productId", async (req: Request, res: Response) => {
+  // 検索条件を取得
+  const productId = req.query.productId;
+  // パラメータを設定
+  const params = {
+    applicationId: appid,
+    affiliateId: affiliateId,
+    productId: productId || ''
+  }
+  const version = '20170426';
+  const url = `https://app.rakuten.co.jp/services/api/Product/Search/${version}`;
+
+  // APIをたたく
+  const resultProducts = await new Promise(resolve => {
+    let results: object[] = [];
+    request.get({ url, qs: params, json: true }, (e, response, body) => {
+      if (e) {
+        res.status(500).send({ error: e.message });
+      }
+      resolve(body.Products);
+    });
+  });
+
+  // jsonで返す
+  res.json(resultProducts);
+});
+
 export default router;

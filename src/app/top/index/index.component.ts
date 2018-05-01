@@ -47,6 +47,8 @@ export class IndexComponent {
 
   // "アイテム検索"ボタンを押した時の処理
   onSubmit(value: any) {
+    // History API
+    history.pushState(null, null, `/?keyword=${value.keyword}&category=${value.category}`);
     // 選択したカテゴリーに含まれるジャンルIDを取得
     const targetCategory = this.categories.find(category => category['label'] === value.category);
     const genreIds = targetCategory ? targetCategory['value'] : ['']
@@ -57,12 +59,6 @@ export class IndexComponent {
       // 表示用の配列に代入
       this.searchProducts = data
     }, null, null);
-  }
-
-  // アイテムをクリックした時の処理
-  onClickProduct(event: any, index: number) {
-    // localStrageに対象のアイテム情報を保管
-    localStorage.setItem('productInfo', JSON.stringify(this.searchProducts[index]['Product']));
   }
 
 }

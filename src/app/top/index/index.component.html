@@ -56,7 +56,7 @@
         <div class="ui divided items">
           <ng-container *ngFor="let item of searchProducts; index as i">
             <ng-container *ngIf="item && item.Product.productName">
-              <a class="item" href="/reviews" (click)="onClickProduct($event, i)">
+              <a class="item" href="/reviews?productId={{ item.Product.productId }}">
                 <div class="image">
                   <img [attr.src]="item.Product.mediumImageUrl">
                 </div>
