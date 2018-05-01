@@ -4,7 +4,7 @@
     <div class="ui items raised segment">
       <div class="item" *ngIf="productInfo">
         <div class="image">
-          <img [attr.src]="productInfo.image" class="product-image">
+          <img class="product-image" src="{{ productInfo.image }}" alt="{{ productInfo.name }}">
         </div>
         <div class="middle aligned content">
           <div class="header">{{ productInfo.name }}</div>
@@ -105,11 +105,11 @@
     <div class="tab-items">
       <div class="ui container">
         <div class="ui divided items">
-          <div class="item" *ngFor="let tweet of tweets">
+          <div class="item" *ngFor="let tweet of tweets; index as tweetIndex">
             <div class="content">
               <div class="tweet-img-div">
-                <a class="header" *ngFor="let media of tweet.media">
-                  <img *ngIf="media.type === 'photo'" [attr.src]="media.dataUrl" class="tweet-img">
+                <a class="header" *ngFor="let media of tweet.media; index as imageIndex">
+                  <img *ngIf="media.type === 'photo'" class="tweet-img" src="{{ media.dataUrl }}" alt="{{ productInfo.name }}_tweet_{{ tweetIndex + 1 }}_image_{{ imageIndex + 1 }}">
                 </a>
               </div>
               <div class="description">
@@ -130,7 +130,7 @@
         <div class="ui divided items">
           <div class="item" *ngFor="let video of videos">
             <a class="ui small image" [attr.href]="'https://www.youtube.com/watch?v=' + video.videoId">
-              <img [attr.src]="video.thumbnail">
+              <img src="{{ video.thumbnail }}" alt="{{ video.title }}">
             </a>
             <div class="content">
               <a class="header" [attr.href]="'https://www.youtube.com/watch?v=' + video.videoId">

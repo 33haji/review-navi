@@ -58,7 +58,7 @@
             <ng-container *ngIf="item && item.Product.productName">
               <a class="item" href="/reviews?productId={{ item.Product.productId }}">
                 <div class="image">
-                  <img [attr.src]="item.Product.mediumImageUrl">
+                  <img src="{{ item.Product.mediumImageUrl }}" alt="{{ item.Product.productName }}">
                 </div>
                 <div class="middle aligned content">
                   <div class="header">{{ item.Product.productName }}</div>
