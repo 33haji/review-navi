@@ -47,8 +47,6 @@ export class IndexComponent implements OnInit {
   isSp: boolean;
   // ランキングのアイテム
   rankingItems: object[] = [];
-  // 対象アイテムのランキング
-  rank: number;
   // ランキング名
   rankingName: string = '';
 
@@ -132,8 +130,7 @@ export class IndexComponent implements OnInit {
     // 対象ジャンルのランキングを取得(楽天)
     this._rakutenApiService.getRankingByGenreId(productInfoFull['rankTargetGenreId'])
     .subscribe(data => {
-      this.rank = productInfoFull['rank'];
-      this.rankingName = data.title;
+      this.rankingName = data.title.match(/【.+?】/g)[1];
       this.rankingItems = data.Items;
     }, null, null);
   }
