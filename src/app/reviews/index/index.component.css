@@ -32,7 +32,7 @@
   word-wrap: break-word;
 }
 .menu .item-sp {
-  width: 33%;
+  width: 25%;
   font-size: 12px;
 }
 
@@ -79,4 +79,13 @@
 }
 .tweet-img-div {
   text-align: center;
+}
+
+/* ランキング */
+.rank {
+  color: rgba(0,0,0,.85);
+}
+.rank-image {
+  width: 40px;
+  margin-bottom: 10px;
 }

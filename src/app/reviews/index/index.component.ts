@@ -45,6 +45,12 @@ export class IndexComponent implements OnInit {
   params: any;
   // PC or SP
   isSp: boolean;
+  // ランキングのアイテム
+  rankingItems: object[] = [];
+  // 対象アイテムのランキング
+  rank: number;
+  // ランキング名
+  rankingName: string = '';
 
   constructor(
     private _rakutenApiService: RakutenApiService,
@@ -121,6 +127,14 @@ export class IndexComponent implements OnInit {
     .subscribe(data => {
       // 表示用の配列に代入
       this.videos = data
+    }, null, null);
+
+    // 対象ジャンルのランキングを取得(楽天)
+    this._rakutenApiService.getRankingByGenreId(productInfoFull['rankTargetGenreId'])
+    .subscribe(data => {
+      this.rank = productInfoFull['rank'];
+      this.rankingName = data.title;
+      this.rankingItems = data.Items;
     }, null, null);
   }
 

@@ -53,4 +53,23 @@ export class RakutenApiService {
       console.log(e.massage)
     }
   }
+
+  /**
+   * 対象ジャンルのランキングを取得する
+   * @param  {string} genreId 対象ジャンル
+   * @return {[type]}         ランキング情報
+   */
+  getRankingByGenreId (genreId: string) {
+    // パラメータを設定
+    const params = new URLSearchParams();
+    params.set('genreId', genreId);
+
+    // サーバーサイドでAPIをたたき、ランキング情報を取得
+    try {
+      return this.http.get("api/rakuten/ranking", { params })
+      .map(res => res.json());
+    } catch (e) {
+      console.log(e.massage)
+    }
+  }
 }

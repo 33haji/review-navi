@@ -71,4 +71,32 @@ router.get("/productId", async (req: Request, res: Response) => {
   res.json(resultProducts);
 });
 
+// 対象ジャンルのランキングを取得するAPI
+router.get("/ranking", async (req: Request, res: Response) => {
+  // 検索条件を取得
+  const genreId = req.query.genreId;
+  // パラメータを設定
+  const params = {
+    applicationId: appid,
+    affiliateId: affiliateId,
+    genreId: genreId || ''
+  }
+  const version = '20170628';
+  const url = `https://app.rakuten.co.jp/services/api/IchibaItem/Ranking/${version}`;
+
+  // APIをたたく
+  const resultProducts = await new Promise(resolve => {
+    let results: object[] = [];
+    request.get({ url, qs: params, json: true }, (e, response, body) => {
+      if (e) {
+        res.status(500).send({ error: e.message });
+      }
+      resolve(body);
+    });
+  });
+
+  // jsonで返す
+  res.json(resultProducts);
+});
+
 export default router;
