@@ -42,7 +42,7 @@ export class IndexComponent {
     const userAgent = window.navigator.userAgent;
     this.isSp = userAgent.indexOf('iPhone') > 0
                 || (userAgent.indexOf('Android') > 0) && (userAgent.indexOf('Mobile') > 0)
-                || userAgent.indexOf('Windows Phone') > 0
+                || userAgent.indexOf('Windows Phone') > 0;
   }
 
   // "アイテム検索"ボタンを押した時の処理

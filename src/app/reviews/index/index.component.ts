@@ -43,6 +43,8 @@ export class IndexComponent implements OnInit {
   path: string = '';
   // URLパラメータ
   params: any;
+  // PC or SP
+  isSp: boolean;
 
   constructor(
     private _rakutenApiService: RakutenApiService,
@@ -54,6 +56,11 @@ export class IndexComponent implements OnInit {
     this.params = this._activatedRoute.snapshot.queryParams;
     this.path = `${location.pathname}?productId=${this.params.productId}`;
     this.tab = this.params.tab || 'review';
+    // userAgentの判定
+    const userAgent = window.navigator.userAgent;
+    this.isSp = userAgent.indexOf('iPhone') > 0
+                || (userAgent.indexOf('Android') > 0) && (userAgent.indexOf('Mobile') > 0)
+                || userAgent.indexOf('Windows Phone') > 0;
   }
 
   async ngOnInit() {

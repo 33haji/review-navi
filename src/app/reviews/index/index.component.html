@@ -4,7 +4,7 @@
     <div class="ui items raised segment">
       <div class="item" *ngIf="productInfo">
         <div class="image">
-          <img class="product-image" src="{{ productInfo.image }}" alt="{{ productInfo.name }}">
+          <img class="{{ isSp ? '' : 'product-image' }}" src="{{ productInfo.image }}" alt="{{ productInfo.name }}">
         </div>
         <div class="middle aligned content">
           <div class="header">{{ productInfo.name }}</div>
@@ -18,10 +18,10 @@
             </div>
             <div class="sub header">{{ reviewAvg }}</div>
           </div>
-          <a class="ui orange button" [attr.href]="productInfo.url">
+          <a class="ui orange button {{ isSp ? 'item-button-sp' : '' }}" href="{{ productInfo.url }}">
             <i class="shopping basket icon"></i> 商品画面へ
           </a>
-          <a class="ui blue button" href="/">
+          <a class="ui blue button {{ isSp ? 'item-button-sp' : '' }}" href="/">
             <i class="search icon"></i> アイテム検索に戻る
           </a>
         </div>
@@ -31,13 +31,13 @@
   <!-- /商品概要 -->
 
   <div class="ui top attached tabular menu">
-    <a class="item" [class.active]="tab === 'review'" (click)="onClickTab('review')">
+    <a class="item {{ isSp ? 'item-sp' : '' }}" [class.active]="tab === 'review'" (click)="onClickTab('review')">
       <i class="thumbs up outline icon"></i>レビュー
     </a>
-    <a class="item" [class.active]="tab === 'tweet'" (click)="onClickTab('tweet')">
+    <a class="item {{ isSp ? 'item-sp' : '' }}" [class.active]="tab === 'tweet'" (click)="onClickTab('tweet')">
       <i class="comment outline icon"></i>関連ツイート
     </a>
-    <a class="item" [class.active]="tab === 'video'" (click)="onClickTab('video')">
+    <a class="item {{ isSp ? 'item-sp' : '' }}" [class.active]="tab === 'video'" (click)="onClickTab('video')">
       <i class="film icon"></i>関連動画
     </a>
   </div>
@@ -109,7 +109,7 @@
             <div class="content">
               <div class="tweet-img-div">
                 <a class="header" *ngFor="let media of tweet.media; index as imageIndex">
-                  <img *ngIf="media.type === 'photo'" class="tweet-img" src="{{ media.dataUrl }}" alt="{{ productInfo.name }}_tweet_{{ tweetIndex + 1 }}_image_{{ imageIndex + 1 }}">
+                  <img *ngIf="media.type === 'photo'" class="{{ isSp ? 'tweet-img-sp' : 'tweet-img' }}" src="{{ media.dataUrl }}" alt="{{ productInfo.name }}_tweet_{{ tweetIndex + 1 }}_image_{{ imageIndex + 1 }}">
                 </a>
               </div>
               <div class="description">

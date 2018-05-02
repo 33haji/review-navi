@@ -23,6 +23,18 @@
   max-width: 20px;
   height: 20px;
 }
+.item-button-sp {
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.description p {
+  word-wrap: break-word;
+}
+.menu .item-sp {
+  width: 33%;
+  font-size: 12px;
+}
 
 /* 評価用の星 */
 .star {
@@ -37,7 +49,6 @@
 .rating-average .star {
   font-size: 30px;
   text-align: center;
-  max-width: 50%;
   margin: 0 auto;
   margin-bottom: 15px;
 }
@@ -58,6 +69,11 @@
 /* ツイート */
 .tweet-img {
   height: 150px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.tweet-img-sp {
+  width: 30%;
   margin-left: 5px;
   margin-right: 5px;
 }
