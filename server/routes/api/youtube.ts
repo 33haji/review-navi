@@ -9,40 +9,47 @@ const router: Router = Router();
 
 // YouTubeで関連動画を検索するAPI
 router.get("/", async (req: Request, res: Response) => {
-  // キーワード
-  const keyword = req.query.keyword;
+  // キーワードを分割
+  const queryKeyword = req.query.keyword;
+  const keywords = queryKeyword.split(/\s+/g);
+  keywords.unshift(queryKeyword);
   // APIクライアントを生成
   const youTube = new YouTube();
   youTube.setKey(youtubeConfig.apiKey);
   youTube.addParam('type', 'video');
+  youTube.addParam('regionCode', 'JP');
 
   // search APIを使ってキーワード検索
   let response = [];  // 結果
   let videoIdsStr = ''; // ビデオのIDをカンマ区切りで連結した文字列
-  await new Promise ((resolve, reject) => {
-    youTube.search(keyword, 50, function(error, result) {
-      if (error) {
-        console.log(error);
-        reject(error);
-      }
-
-      // 検索結果を成形
-      response = result.items.map(data => {
-        return {
-          videoId: data.id.videoId,
-          channelTitle: data.snippet.channelTitle,
-          title: data.snippet.title,
-          description: data.snippet.description,
-          thumbnail: data.snippet.thumbnails.high.url
+  const resultsPerKeyword = Math.floor(50 / keywords.length); // キーワードごとの検索数(全体で50に調整するため)
+  let promiseArray = keywords.map(keyword => {
+    return new Promise ((resolve, reject) => {
+      youTube.search(keyword, resultsPerKeyword, function(error, result) {
+        if (error) {
+          console.log(error);
+          reject(error);
         }
+
+        // 検索結果を成形
+        response = response.concat(result.items.map(data => {
+          return {
+            videoId: data.id.videoId,
+            channelTitle: data.snippet.channelTitle,
+            title: data.snippet.title,
+            description: data.snippet.description,
+            thumbnail: data.snippet.thumbnails.high.url
+          }
+        }));
+
+        // ビデオのIDをカンマ区切りで連結
+        result.items.forEach(data => videoIdsStr += `${videoIdsStr ? ',' : ''}${data.id.videoId}`);
+
+        resolve(true);
       });
-
-      // ビデオのIDをカンマ区切りで連結
-      result.items.forEach(data => videoIdsStr += `${videoIdsStr ? ',' : ''}${data.id.videoId}`);
-
-      resolve(true);
     });
   });
+  await Promise.all(promiseArray);
 
   // ビデオの詳細情報を取得
   await new Promise ((resolve, reject) => {
