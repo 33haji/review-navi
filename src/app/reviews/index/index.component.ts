@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 import { RakutenApiService } from './../../../lib/service/rakuten-api/rakuten-api.service';
 import { WebScrapingService } from './../../../lib/service/web-scraping/web-scraping.service';
@@ -51,6 +52,7 @@ export class IndexComponent implements OnInit {
   rankingName: string = '';
 
   constructor(
+    private titleService: Title,
     private _rakutenApiService: RakutenApiService,
     private _webScrapingService: WebScrapingService,
     private _twitterApiService: TwitterApiService,
@@ -87,6 +89,8 @@ export class IndexComponent implements OnInit {
       minPrice: productInfoFull['minPrice'].toLocaleString(),
       maxPrice: productInfoFull['maxPrice'].toLocaleString()
     };
+    // ページタイトルを設定
+    this.titleService.setTitle(`${this.productInfo.name} - レビュコレ -`);
 
     // レビューの平均値を算出
     this.reviewAvg = productInfoFull['reviewAverage'];
