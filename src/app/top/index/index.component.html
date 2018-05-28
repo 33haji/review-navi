@@ -98,5 +98,71 @@
       </div>
     </div>
     <!-- /about -->
+    <!-- ランキング -->
+    <div class="ui container ranking" *ngIf="ranking.length > 0">
+      <ng-container *ngFor="let rankingObj of ranking">
+        <h2 class="ui header">
+          <i class="{{ rankingObj.icon }} icon"></i>
+          <div class="content">{{ rankingObj.genre }}ランキング</div>
+        </h2>
+        <div class="{{ isSp ? 'ui unstackable items' : 'ui five column grid' }} ranking-module">
+          <ng-container *ngFor="let item of rankingObj.items.slice(0, 5); index as i">
+            <!-- sp -->
+            <ng-container *ngIf="isSp; else isPc">
+              <a class="item" href="/reviews?productId={{ item.Product.productId }}">
+                <div class="image">
+                  <img src="{{ item.Product.mediumImageUrl }}" alt="{{ item.Product.productName }}">
+                </div>
+                <div class="content">
+                  <div class="header">
+                    <ng-container *ngIf="i + 1 <= 3; else rank">
+                      <img src="/assets/img/rank{{ i + 1 }}.png" alt="rank{{ i + 1 }}_image" class="rank-image"><br>
+                    </ng-container>
+                    <ng-template #rank>
+                      <h3 class="rank">{{ i + 1 }}.</h3>
+                    </ng-template>
+                    <div class="product-name">
+                      {{ item.Product.productName }}
+                    </div>
+                  </div>
+                  <div class="meta">
+                    ¥{{ item.Product.minPrice }} ~ ¥{{ item.Product.maxPrice }}
+                  </div>
+                </div>
+              </a>
+            </ng-container>
+            <!-- /sp -->
+            <!-- pc -->
+            <ng-template #isPc>
+              <div class="column">
+                <a class="ui fluid card" href="/reviews?productId={{ item.Product.productId }}">
+                  <div class="image">
+                    <img src="{{ item.Product.mediumImageUrl }}" alt="{{ item.Product.productName }}">
+                  </div>
+                  <div class="content">
+                    <div class="header">
+                      <ng-container *ngIf="i + 1 <= 3; else rank">
+                        <img src="/assets/img/rank{{ i + 1 }}.png" alt="rank{{ i + 1 }}_image" class="rank-image"><br>
+                      </ng-container>
+                      <ng-template #rank>
+                        <h3 class="rank">{{ i + 1 }}.</h3>
+                      </ng-template>
+                      <div class="product-name pc">
+                        {{ item.Product.productName }}
+                      </div>
+                    </div>
+                    <div class="meta">
+                      ¥{{ item.Product.minPrice }} ~ ¥{{ item.Product.maxPrice }}
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </ng-template>
+            <!-- /pc -->
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+    <!-- /ランキング -->
   </ng-template>
 </div>

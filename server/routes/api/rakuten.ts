@@ -1,5 +1,6 @@
 import { Request, Response, Router } from "express";
-import * as request from 'request'
+import * as request from 'request';
+import { get } from 'lodash';
 
 // config
 import { appid, affiliateId } from './config/rakuten-client';
@@ -43,15 +44,17 @@ router.get("/", async (req: Request, res: Response) => {
   res.json(prouducts);
 });
 
-// "productId"でアイテム情報を検索するAPI
-router.get("/productId", async (req: Request, res: Response) => {
+// id(productIdやgenreIdなど)でアイテム情報を検索するAPI
+router.get("/id", async (req: Request, res: Response) => {
   // 検索条件を取得
-  const productId = req.query.productId;
+  const { productId = '', genreId = '', sort = 'standard' } = req.query;
   // パラメータを設定
   const params = {
     applicationId: appid,
-    affiliateId: affiliateId,
-    productId: productId || ''
+    affiliateId,
+    productId,
+    genreId,
+    sort
   }
   const version = '20170426';
   const url = `https://app.rakuten.co.jp/services/api/Product/Search/${version}`;
@@ -74,12 +77,12 @@ router.get("/productId", async (req: Request, res: Response) => {
 // 対象ジャンルのランキングを取得するAPI
 router.get("/ranking", async (req: Request, res: Response) => {
   // 検索条件を取得
-  const genreId = req.query.genreId;
+  const genreId = get(req, 'query.genreId', 0);
   // パラメータを設定
   const params = {
     applicationId: appid,
     affiliateId: affiliateId,
-    genreId: genreId || ''
+    genreId: genreId || 0
   }
   const version = '20170628';
   const url = `https://app.rakuten.co.jp/services/api/IchibaItem/Ranking/${version}`;

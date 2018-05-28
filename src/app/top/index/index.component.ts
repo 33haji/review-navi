@@ -26,6 +26,8 @@ export class IndexComponent {
   searchProducts: object[] = [];
   // PC or SP
   isSp: boolean;
+  // ランキング
+  ranking: object[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -43,6 +45,28 @@ export class IndexComponent {
     this.isSp = userAgent.indexOf('iPhone') > 0
                 || (userAgent.indexOf('Android') > 0) && (userAgent.indexOf('Mobile') > 0)
                 || userAgent.indexOf('Windows Phone') > 0;
+  }
+
+  async ngOnInit() {
+    // ランキングを取得
+    // 家電
+    this._rakutenApiService.findByGenreId('562637', '-seller')
+    .subscribe(data => {
+      const obj = { genre: '家電', icon: 'tv', items: data }
+      this.ranking.push(obj);
+    }, null, null);
+    // CD・DVD・楽器
+    this._rakutenApiService.findByGenreId('101240', '-seller')
+    .subscribe(data => {
+      const obj = { genre: 'CD・DVD・楽器', icon: 'film', items: data }
+      this.ranking.push(obj);
+    }, null, null);
+    // 本・雑誌・コミック
+    this._rakutenApiService.findByGenreId('200162', '-seller')
+    .subscribe(data => {
+      const obj = { genre: '本・雑誌・コミック', icon: 'book', items: data }
+      this.ranking.push(obj);
+    }, null, null);
   }
 
   // "アイテム検索"ボタンを押した時の処理

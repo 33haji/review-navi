@@ -37,7 +37,10 @@
 /* aboutモジュール */
 .about-module, .about-module-sp {
   text-align: center;
-  margin-top: 100px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+  border-bottom: 1px solid rgba(34,36,38,.15);
 }
 .about-module i {
   font-size: 5em;
@@ -65,4 +68,27 @@
 .about-module-sp .context {
   font-size: 2.5vw;
   line-height: 4vw;
+}
+
+/* ランキングモジュール */
+.ranking .rank-image {
+  width: 40px;
+  margin-bottom: 10px;
+}
+.ranking .rank {
+  color: rgba(0,0,0,.85);
+}
+.ranking .product-name.pc {
+  display: -webkit-box;
+  height: 50px;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.5;
+}
+.ranking .meta {
+  margin-top: 10px;
+}
+.ranking .ranking-module {
+  margin-bottom: 50px;
 }

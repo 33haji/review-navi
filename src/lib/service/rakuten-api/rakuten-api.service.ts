@@ -47,7 +47,27 @@ export class RakutenApiService {
 
     // サーバーサイドでAPIをたたき、アイテム情報を取得
     try {
-      return this.http.get("api/rakuten/productId", { params })
+      return this.http.get("api/rakuten/id", { params })
+      .map(res => res.json());
+    } catch (e) {
+      console.log(e.massage)
+    }
+  }
+
+  /**
+   * "genreId"でアイテムを検索する
+   * @param  {string} genreId
+   * @return {Observable<Response>}
+   */
+  findByGenreId (genreId: string, sort: string) {
+    // パラメータを設定
+    const params = new URLSearchParams();
+    params.set('genreId', genreId || '');
+    params.set('sort', sort || '');
+
+    // サーバーサイドでAPIをたたき、アイテム情報を取得
+    try {
+      return this.http.get("api/rakuten/id", { params })
       .map(res => res.json());
     } catch (e) {
       console.log(e.massage)
