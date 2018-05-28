@@ -108,7 +108,7 @@ export class IndexComponent implements OnInit {
     }, null, null);
 
     // Twitterで関連ツイートを取得
-    const name = productInfoFull['productNo'] || this.productInfo.name
+    const name = productInfoFull['productName'] || this.productInfo.name
     this._twitterApiService.getHashtagTweet(name)
     .subscribe(data => {
       // textに含まれるURLをaタグに変換
