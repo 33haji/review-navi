@@ -12,9 +12,9 @@ router.get("/", async (req: Request, res: Response) => {
   const hashtagKeyword = req.query.hashtagKeyword;
   const hashtags = hashtagKeyword.split(/\s+/g);
   // 検索文字列を作成(OR条件で区切る)
-  let q = `#${hashtagKeyword}`;
-  q += ` OR #${hashtagKeyword.replace(/\s+/g, "")}`;
-  hashtags.forEach(hashtag => q += ` OR #${hashtag}`);
+  let q = '';
+  hashtags.forEach(hashtag => q += `#${hashtag} OR `);
+  q = q.slice(0, -4);
   q += ' -RT -filter:replies';
 
   // Twitterのclient
