@@ -74,6 +74,48 @@ router.get("/id", async (req: Request, res: Response) => {
   res.json(resultProducts);
 });
 
+// productIdsでアイテム情報を検索するAPI
+router.get("/productIds", async (req: Request, res: Response) => {
+  // 検索条件を取得
+  const { productIds = '' } = req.query;
+  const productIdsArray = productIds.split(',');
+  // パラメータを設定
+  const params = {
+    applicationId: appid,
+    productId: '',
+    affiliateId
+  }
+  const version = '20170426';
+  const url = `https://app.rakuten.co.jp/services/api/Product/Search/${version}`;
+
+  // カテゴリーの要素数分だけループさせる
+  let prouducts: object[] = [];
+  for (let productId of productIdsArray) {
+    params.productId = productId
+
+    // APIをたたく
+    const resultProducts = await new Promise(resolve => {
+      // request.get({ url, qs: params, json: true }, (e, response, body) => {
+      //   if (e) {
+      //     res.status(500).send({ error: e.message });
+      //   }
+      //   resolve(body.Products);
+      // });
+      setTimeout(() => {
+        request.get({ url, qs: params, json: true }, (e, response, body) => {
+          if (e) {
+            res.status(500).send({ error: e.message });
+          }
+          resolve(body.Products);
+        });
+      }, 300);
+    });
+    prouducts = prouducts.concat(resultProducts);
+  };
+  // jsonで返す
+  res.json(prouducts);
+});
+
 // 対象ジャンルのランキングを取得するAPI
 router.get("/ranking", async (req: Request, res: Response) => {
   // 検索条件を取得

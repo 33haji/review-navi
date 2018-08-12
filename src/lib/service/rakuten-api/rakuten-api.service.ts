@@ -55,6 +55,25 @@ export class RakutenApiService {
   }
 
   /**
+   * "productIds"でアイテムを検索する
+   * @param  {array} productIds
+   * @return {Observable<Response>}
+   */
+  findByProductIds (productIds: string[]) {
+    // パラメータを設定
+    const params = new URLSearchParams();
+    params.set('productIds', productIds.join(','));
+
+    // サーバーサイドでAPIをたたき、アイテム情報を取得
+    try {
+      return this.http.get("api/rakuten/productIds", { params })
+      .map(res => res.json());
+    } catch (e) {
+      console.log(e.massage)
+    }
+  }
+
+  /**
    * "genreId"でアイテムを検索する
    * @param  {string} genreId
    * @return {Observable<Response>}

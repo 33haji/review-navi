@@ -4,6 +4,7 @@ import { RakutenApiService } from './../../../lib/service/rakuten-api/rakuten-ap
 import { Title, DomSanitizer } from '@angular/platform-browser';
 // それぞれのYoutuberのデータ
 import * as hajimesyatyo from '../data/hajimesyatyo'
+import * as hikakin from '../data/hikakin'
 
 @Component({
   selector: 'app-reviews',
@@ -30,7 +31,7 @@ export class ReviewsComponent implements OnInit {
     const params = this._activatedRoute.snapshot.queryParams;
     this.id = params.name;
     // データをまとめる
-    this.data = { hajimesyatyo };
+    this.data = { hajimesyatyo, hikakin };
   }
 
   async ngOnInit() {
@@ -39,16 +40,17 @@ export class ReviewsComponent implements OnInit {
     // ページタイトルを設定
     this._titleService.setTitle(`${this.youtuberData.name} 商品レビュー まとめ - レビュコレ -`);
     // 商品の情報を取得
-    this.youtuberData.reviews.forEach(review => {
-      this._rakutenApiService.findByProductId(review['item'].id)
-      .subscribe(data => {
-        const itemInfo = data[0].Product;
-        review['item'].minPrice = itemInfo.minPrice;
-        review['item'].maxPrice = itemInfo.maxPrice;
-        review['item'].affiliateUrl = itemInfo.affiliateUrl;
-        review['item'].genreName = itemInfo.genreName;
-      }, null, null);
-    });
+    const productIds = this.youtuberData.reviews.map(review => review['item'].id);
+    this._rakutenApiService.findByProductIds(productIds)
+    .subscribe(data => {
+      data.forEach((item, index) => {
+        const itemInfo = item.Product;
+        this.youtuberData.reviews[index]['item'].minPrice = itemInfo.minPrice;
+        this.youtuberData.reviews[index]['item'].maxPrice = itemInfo.maxPrice;
+        this.youtuberData.reviews[index]['item'].affiliateUrl = itemInfo.affiliateUrl;
+        this.youtuberData.reviews[index]['item'].genreName = itemInfo.genreName;
+      });
+    }, null, null);
   }
 
   videoUrl (url: string) {
