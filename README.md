@@ -8,6 +8,7 @@
   - Twitterの関連ツイート
   - YouTubeの関連動画
   - 関連アイテムのランキング
+  - 有名Youtuberの商品レビューまとめ
 
 ## Install
 
