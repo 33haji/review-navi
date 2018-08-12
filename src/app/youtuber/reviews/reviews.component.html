@@ -1,0 +1,45 @@
+<div class="youtuber-page">
+  <!-- タイトル -->
+  <div class="ui center aligned text container">
+    <div class="ui items raised segment">
+      <h2 class="ui header">
+        <img src="/assets/img/youtuber/youtube-icon.jpeg" class="ui circular image">
+        <div class="content">
+          有名Youtuber 商品レビュー まとめ
+          <div class="sub header">〜 {{ youtuberData.name }} 〜</div>
+        </div>
+      </h2>
+    </div>
+  </div>
+  <!-- /タイトル -->
+
+  <!-- 商品レビュー一覧 -->
+  <div class="ui segment">
+    <div class="ui container">
+      <div class="ui divided items">
+        <div class="item" *ngFor="let review of youtuberData.reviews">
+          <iframe class="ui image" [src]="videoUrl(review.video.src)" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          <div class="content">
+            <a class="header" href="{{ review.item.affiliateUrl }}">
+              {{ review.item.name }}
+            </a>
+            <div class="meta">({{ review.item.genreName }})</div>
+            <div class="extra">¥{{ review.item.minPrice }} ~ ¥{{ review.item.maxPrice }}</div>
+            <div class="description">
+              <p>{{ review.item.description }}</p>
+            </div>
+            <div class="extra">
+              <a class="ui right floated primary button" href="/reviews?productId={{ review.item.id }}">
+                商品詳細 <i class="right chevron icon"></i>
+              </a>
+              <a class="ui right floated orange button" href="{{ review.item.affiliateUrl }}">
+                <i class="shopping basket icon"></i> 購入する
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /商品レビュー一覧 -->
+</div>
