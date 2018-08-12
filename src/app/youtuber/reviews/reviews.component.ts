@@ -5,6 +5,7 @@ import { Title, DomSanitizer } from '@angular/platform-browser';
 // それぞれのYoutuberのデータ
 import * as hajimesyatyo from '../data/hajimesyatyo'
 import * as hikakin from '../data/hikakin'
+import * as watanabemahoto from '../data/watanabemahoto'
 
 @Component({
   selector: 'app-reviews',
@@ -31,7 +32,7 @@ export class ReviewsComponent implements OnInit {
     const params = this._activatedRoute.snapshot.queryParams;
     this.id = params.name;
     // データをまとめる
-    this.data = { hajimesyatyo, hikakin };
+    this.data = { hajimesyatyo, hikakin, watanabemahoto };
   }
 
   async ngOnInit() {
