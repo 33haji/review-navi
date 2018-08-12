@@ -28,6 +28,25 @@ export class IndexComponent {
   isSp: boolean;
   // ランキング
   ranking: object[] = [];
+  // Youtuber
+  youtuber: object[] = [
+    {
+      id: 'hajimesyatyo',
+      name: 'はじめしゃちょー'
+    },
+    {
+      id: 'hikakin',
+      name: 'ヒカキン'
+    },
+    {
+      id: 'watanabemahoto',
+      name: 'ワタナベマホト'
+    },
+    {
+      id: 'orutanachannel',
+      name: 'おるたなchannel'
+    }
+  ];
 
   constructor(
     private fb: FormBuilder,

@@ -70,6 +70,19 @@
   line-height: 4vw;
 }
 
+/* Youtuberモジュール */
+.youtuber-module {
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+  border-bottom: 1px solid rgba(34,36,38,.15);
+}
+.youtuber-module .header a {
+  color: rgba(0,0,0,.87);
+}
+.youtuber-module .header a:hover {
+  color: #1678c2;
+}
+
 /* ランキングモジュール */
 .ranking .rank-image {
   width: 40px;
