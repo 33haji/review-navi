@@ -3,10 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { RakutenApiService } from './../../../lib/service/rakuten-api/rakuten-api.service';
 import { Title, DomSanitizer } from '@angular/platform-browser';
 // それぞれのYoutuberのデータ
-import * as hajimesyatyo from '../data/hajimesyatyo'
-import * as hikakin from '../data/hikakin'
-import * as watanabemahoto from '../data/watanabemahoto'
-import * as orutanachannel from '../data/orutanachannel'
+import * as hajimesyatyo from '../data/hajimesyatyo';
+import * as hikakin from '../data/hikakin';
+import * as watanabemahoto from '../data/watanabemahoto';
+import * as orutanachannel from '../data/orutanachannel';
+import * as maxmurai from '../data/maxmurai';
 
 @Component({
   selector: 'app-reviews',
@@ -33,7 +34,7 @@ export class ReviewsComponent implements OnInit {
     const params = this._activatedRoute.snapshot.queryParams;
     this.id = params.name;
     // データをまとめる
-    this.data = { hajimesyatyo, hikakin, watanabemahoto, orutanachannel };
+    this.data = { hajimesyatyo, hikakin, watanabemahoto, orutanachannel, maxmurai };
   }
 
   async ngOnInit() {

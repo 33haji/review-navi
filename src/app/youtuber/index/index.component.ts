@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { youtuber } from '../data/youtuber';
 
 @Component({
   selector: 'app-index',
@@ -7,10 +8,14 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./index.component.css']
 })
 export class IndexComponent implements OnInit {
+  // Youtuber
+  youtuber: object[];
 
   constructor(
     private titleService: Title
-  ) { }
+  ) {
+    this.youtuber = youtuber;
+  }
 
   ngOnInit() {
     // ページタイトルを設定

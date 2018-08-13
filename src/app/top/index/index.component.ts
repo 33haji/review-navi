@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as CustomValidators from './../../../lib/util/customValidators';
 import { RakutenApiService } from './../../../lib/service/rakuten-api/rakuten-api.service';
+import { youtuber } from '../../youtuber/data/youtuber';
 
 @Component({
   selector: 'top-index',
@@ -29,24 +30,7 @@ export class IndexComponent {
   // ランキング
   ranking: object[] = [];
   // Youtuber
-  youtuber: object[] = [
-    {
-      id: 'hajimesyatyo',
-      name: 'はじめしゃちょー'
-    },
-    {
-      id: 'hikakin',
-      name: 'ヒカキン'
-    },
-    {
-      id: 'watanabemahoto',
-      name: 'ワタナベマホト'
-    },
-    {
-      id: 'orutanachannel',
-      name: 'おるたなchannel'
-    }
-  ];
+  youtuber: object[];
 
   constructor(
     private fb: FormBuilder,
@@ -64,6 +48,8 @@ export class IndexComponent {
     this.isSp = userAgent.indexOf('iPhone') > 0
                 || (userAgent.indexOf('Android') > 0) && (userAgent.indexOf('Mobile') > 0)
                 || userAgent.indexOf('Windows Phone') > 0;
+    // youtuber
+    this.youtuber = youtuber.slice(0, 5);
   }
 
   async ngOnInit() {
