@@ -8,6 +8,7 @@ import * as hikakin from '../data/hikakin';
 import * as watanabemahoto from '../data/watanabemahoto';
 import * as orutanachannel from '../data/orutanachannel';
 import * as maxmurai from '../data/maxmurai';
+import * as setokoji from '../data/setokoji';
 
 @Component({
   selector: 'app-reviews',
@@ -34,7 +35,7 @@ export class ReviewsComponent implements OnInit {
     const params = this._activatedRoute.snapshot.queryParams;
     this.id = params.name;
     // データをまとめる
-    this.data = { hajimesyatyo, hikakin, watanabemahoto, orutanachannel, maxmurai };
+    this.data = { hajimesyatyo, hikakin, watanabemahoto, orutanachannel, maxmurai, setokoji };
   }
 
   async ngOnInit() {
