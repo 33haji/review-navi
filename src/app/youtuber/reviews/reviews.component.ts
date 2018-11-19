@@ -6,6 +6,7 @@ import { Title, DomSanitizer } from '@angular/platform-browser';
 import * as hajimesyatyo from '../data/hajimesyatyo';
 import * as hikakin from '../data/hikakin';
 import * as watanabemahoto from '../data/watanabemahoto';
+import * as charismabrothers from '../data/charismabrothers';
 import * as orutanachannel from '../data/orutanachannel';
 import * as maxmurai from '../data/maxmurai';
 import * as setokoji from '../data/setokoji';
@@ -35,7 +36,7 @@ export class ReviewsComponent implements OnInit {
     const params = this._activatedRoute.snapshot.queryParams;
     this.id = params.name;
     // データをまとめる
-    this.data = { hajimesyatyo, hikakin, watanabemahoto, orutanachannel, maxmurai, setokoji };
+    this.data = { hajimesyatyo, hikakin, watanabemahoto, charismabrothers, orutanachannel, maxmurai, setokoji };
   }
 
   async ngOnInit() {
